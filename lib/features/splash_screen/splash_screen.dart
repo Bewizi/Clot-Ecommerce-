@@ -1,7 +1,9 @@
 import 'package:clot/core/ui/components/layouts/app_scaffold.dart';
 import 'package:clot/core/variables/app_images.dart';
 import 'package:clot/core/variables/colors.dart';
+import 'package:clot/features/auth/presentation/pages/signin/signin.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -13,6 +15,15 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  @override
+  void initState() {
+    super.initState();
+
+    Future.delayed(const Duration(seconds: 3), () {
+      context.go(SignIn.routeName);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return AppScaffold(
