@@ -38,18 +38,18 @@ class PrimaryButton extends StatelessWidget {
             padding ??
             const EdgeInsets.symmetric(
               horizontal: 20,
-              vertical: 10,
+              vertical: 16,
             ),
         decoration: BoxDecoration(
           color: color ?? AppColors.kPrimary,
-          borderRadius: BorderRadius.circular(AppRadius.medium),
+          borderRadius: BorderRadius.circular(AppRadius.fullRadius),
         ),
         child: AppText(
           text,
           style:
               Theme.of(
                 context,
-              ).textTheme.titleSmall?.copyWith(
+              ).textTheme.titleMedium?.copyWith(
                 color: textColor ?? AppColors.kWhite,
               ),
           textAlign: TextAlign.center,
