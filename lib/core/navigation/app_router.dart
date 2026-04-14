@@ -1,3 +1,4 @@
+import 'package:clot/features/auth/presentation/pages/about_yourself/about_yourself.dart';
 import 'package:clot/features/auth/presentation/pages/create_account/create_account.dart';
 import 'package:clot/features/auth/presentation/pages/forgot_password/forgot_password.dart';
 import 'package:clot/features/auth/presentation/pages/signin/signin.dart';
@@ -61,6 +62,16 @@ class ForgotPasswordRoute extends GoRouteData with $ForgotPasswordRoute {
   @override
   Widget build(BuildContext context, GoRouterState state) =>
       const ForgotPassword();
+}
+
+// about yourself
+@TypedGoRoute<AboutYourselfRoute>(path: AboutYourselfRoute.path)
+class AboutYourselfRoute extends GoRouteData with $AboutYourselfRoute {
+  static const path = '/about-yourself';
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) =>
+      const AboutYourself();
 }
 
 /*
