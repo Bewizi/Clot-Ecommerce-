@@ -1,3 +1,6 @@
+import 'package:clot/features/auth/presentation/pages/create_account/create_account.dart';
+import 'package:clot/features/auth/presentation/pages/forgot_password/forgot_password.dart';
+import 'package:clot/features/auth/presentation/pages/signin/signin.dart';
 import 'package:clot/features/splash_screen/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -31,14 +34,14 @@ class SplashScreenRoute extends GoRouteData with $SplashScreenRoute {
       const SplashScreen();
 }
 
-/*
 //  sign up
-@TypedGoRoute<SignUpRoute>(path: SignUpRoute.path)
-class SignUpRoute extends GoRouteData with $SignUpRoute {
-  static const path = '/sign-up';
+@TypedGoRoute<CreateAccountRoute>(path: CreateAccountRoute.path)
+class CreateAccountRoute extends GoRouteData with $CreateAccountRoute {
+  static const path = '/create-account';
 
   @override
-  Widget build(BuildContext context, GoRouterState state) => const SignUp();
+  Widget build(BuildContext context, GoRouterState state) =>
+      const CreateAccount();
 }
 
 //  sign in
@@ -59,6 +62,13 @@ class ForgotPasswordRoute extends GoRouteData with $ForgotPasswordRoute {
   Widget build(BuildContext context, GoRouterState state) =>
       const ForgotPassword();
 }
+
+/*
+
+
+
+
+
 
 // see all homes
 @TypedGoRoute<SeeAllHomesRoute>(path: SeeAllHomesRoute.path)
