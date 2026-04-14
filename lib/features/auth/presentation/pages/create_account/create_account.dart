@@ -105,6 +105,7 @@ class _CreateAccountState extends State<CreateAccount> {
                     if (formKey.currentState!.validate()) {
                       // TODO: Sign in user
                     }
+                    AboutYourselfRoute().go(context);
                   },
                   'Continue',
                 ),
