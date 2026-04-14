@@ -40,22 +40,34 @@ class AppTextField extends StatelessWidget {
       controller: controller,
       onChanged: onChanged,
       decoration: InputDecoration(
+        filled: true,
+        fillColor: AppColors.kBgLight2,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(AppRadius.medium),
+          borderSide: BorderSide.none,
+        ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppRadius.medium),
-          borderSide: BorderSide(
-            color: AppColors.kBlack100.withValues(alpha: 05),
-          ),
+          borderSide: BorderSide.none,
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(AppRadius.medium),
+          borderSide: BorderSide.none,
+        ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(AppRadius.medium),
+          borderSide: const BorderSide(color: AppColors.kDestructive50),
         ),
         hintText: hintText,
         contentPadding: const EdgeInsets.symmetric(
-          vertical: 10,
-          horizontal: 12,
+          vertical: 19,
+          horizontal: 19,
         ),
         hintStyle:
             Theme.of(
               context,
-            ).textTheme.bodySmall?.copyWith(
-              color: AppColors.kBgLight2,
+            ).textTheme.titleMedium?.copyWith(
+              color: AppColors.kBlack100.withValues(alpha: 0.5),
             ),
         prefixIcon: prefixIcon,
         suffixIcon: suffixIcon != null
@@ -64,8 +76,8 @@ class AppTextField extends StatelessWidget {
                 child: suffixIcon,
               )
             : null,
-        // prefixIconColor: AppColors.kGrey30,
-        // suffixIconColor: AppColors.kGrey30,
+        prefixIconColor: AppColors.kBlack100.withValues(alpha: 0.5),
+        suffixIconColor: AppColors.kBlack100.withValues(alpha: 0.5),
         prefixIconConstraints: prefixIconConstraints,
       ),
       keyboardType: keyboardType,
@@ -90,7 +102,7 @@ class AppTextField extends StatelessWidget {
                 ),
           ),
         ],
-        8.verticalSpacing,
+        16.verticalSpacing,
         _buildTextFormField(context),
       ],
     );
