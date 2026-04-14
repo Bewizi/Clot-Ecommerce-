@@ -1,9 +1,13 @@
+import 'package:clot/core/variables/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:clot/core/variables/colors.dart';
 
-TextTheme appTextTheme = GoogleFonts.dmSansTextTheme(
+TextTheme appTextTheme = GoogleFonts.nunitoSansTextTheme(
   const TextTheme(
+    headlineLarge: TextStyle(
+      fontWeight: FontWeight.w800,
+      color: AppColors.kBlack100,
+    ),
     displaySmall: TextStyle(
       fontWeight: FontWeight.w800,
       color: AppColors.kWhite,
