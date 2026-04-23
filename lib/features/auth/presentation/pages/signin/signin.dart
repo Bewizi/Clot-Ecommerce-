@@ -198,6 +198,7 @@ class _SignInState extends State<SignIn> {
                   child: Center(
                     child: AppText(
                       text,
+                      style: context.textTheme.titleMedium,
                     ),
                   ),
                 ),
