@@ -25,6 +25,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
     return AppScaffold(
       appbar: AppBar(
         leading: const AppBackButton(),
+        forceMaterialTransparency: true,
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
