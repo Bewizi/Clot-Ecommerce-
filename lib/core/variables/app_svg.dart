@@ -1,5 +1,7 @@
 class AppSvg {
-  static const String kLogoBlue = 'assets/svgs/mdi_home-search.svg';
+  static const String kAppleIcon = 'assets/svgs/apple_svg.svg';
+  static const String kFaceBookIcon = 'assets/svgs/facebook_svg.svg';
+  static const String kGoogleIcon = 'assets/svgs/google_icon.svg';
 
   //   navigation bar icon
   static const String kSaved = 'assets/svgs/heart.svg';
