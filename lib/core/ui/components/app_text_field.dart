@@ -1,4 +1,5 @@
 import 'package:clot/core/ui/components/app_text.dart';
+import 'package:clot/core/ui/extensions/app_color_extension.dart';
 import 'package:clot/core/ui/extensions/app_spacing_extension.dart';
 import 'package:clot/core/variables/app_radius.dart';
 import 'package:clot/core/variables/colors.dart';
@@ -41,7 +42,7 @@ class AppTextField extends StatelessWidget {
       onChanged: onChanged,
       decoration: InputDecoration(
         filled: true,
-        fillColor: AppColors.kBgLight2,
+        fillColor: Theme.of(context).colorScheme.secondary,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppRadius.medium),
           borderSide: BorderSide.none,
@@ -63,12 +64,7 @@ class AppTextField extends StatelessWidget {
           vertical: 19,
           horizontal: 19,
         ),
-        hintStyle:
-            Theme.of(
-              context,
-            ).textTheme.titleMedium?.copyWith(
-              color: AppColors.kBlack100.withValues(alpha: 0.5),
-            ),
+        hintStyle: TextStyle(color: Theme.of(context).colorScheme.hintText),
         prefixIcon: prefixIcon,
         suffixIcon: suffixIcon != null
             ? InkWell(
@@ -76,8 +72,8 @@ class AppTextField extends StatelessWidget {
                 child: suffixIcon,
               )
             : null,
-        prefixIconColor: AppColors.kBlack100.withValues(alpha: 0.5),
-        suffixIconColor: AppColors.kBlack100.withValues(alpha: 0.5),
+        prefixIconColor: Theme.of(context).colorScheme.hintText,
+        suffixIconColor: Theme.of(context).colorScheme.hintText,
         prefixIconConstraints: prefixIconConstraints,
       ),
       keyboardType: keyboardType,

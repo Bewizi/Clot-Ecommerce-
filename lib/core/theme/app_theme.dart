@@ -7,20 +7,15 @@ class AppTheme {
     scaffoldBackgroundColor: AppColors.kWhite,
     useMaterial3: true,
     textTheme: appTextTheme,
-    colorScheme: const ColorScheme(
-      brightness: Brightness.light,
-
+    colorScheme: const ColorScheme.light(
       primary: AppColors.kPrimary,
       onPrimary: AppColors.kWhite,
-
       secondary: AppColors.kBgLight2,
       onSecondary: AppColors.kBlack100,
-
-      error: AppColors.kDestructive50,
-      onError: AppColors.kBgLight2,
-
       surface: AppColors.kWhite,
-      onSurface: AppColors.kBgLight2,
+      onSurface: AppColors.kBlack100,
+      error: AppColors.kDestructive50,
+      onError: AppColors.kWhite,
     ),
     textButtonTheme: TextButtonThemeData(
       style: ButtonStyle(
@@ -30,23 +25,18 @@ class AppTheme {
   );
 
   static ThemeData darkTheme = ThemeData(
-    scaffoldBackgroundColor: AppColors.kBlack100,
+    scaffoldBackgroundColor: AppColors.kMidnightViolet900,
     useMaterial3: true,
     textTheme: appTextTheme,
-    colorScheme: const ColorScheme(
-      brightness: Brightness.dark,
-
+    colorScheme: const ColorScheme.dark(
       primary: AppColors.kPrimary,
       onPrimary: AppColors.kWhite,
-
-      secondary: AppColors.kBgLight2,
-      onSecondary: AppColors.kBlack100,
-
+      secondary: AppColors.kShadowGrey800,
+      onSecondary: AppColors.kWhite,
+      surface: AppColors.kBlack100,
+      onSurface: AppColors.kWhite,
       error: AppColors.kDestructive50,
-      onError: AppColors.kBgLight2,
-
-      surface: AppColors.kWhite,
-      onSurface: AppColors.kBgLight2,
+      onError: AppColors.kWhite,
     ),
     textButtonTheme: TextButtonThemeData(
       style: ButtonStyle(
