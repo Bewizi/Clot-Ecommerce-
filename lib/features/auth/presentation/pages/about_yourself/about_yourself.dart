@@ -1,6 +1,7 @@
 import 'package:clot/core/ui/components/app_button.dart';
 import 'package:clot/core/ui/components/app_text.dart';
 import 'package:clot/core/ui/components/layouts/app_scaffold.dart';
+import 'package:clot/core/ui/extensions/app_color_extension.dart';
 import 'package:clot/core/ui/extensions/app_spacing_extension.dart';
 import 'package:clot/core/ui/extensions/app_theme_extension.dart';
 import 'package:clot/core/variables/colors.dart';
@@ -35,7 +36,7 @@ class _AboutYourselfState extends State<AboutYourself> {
                   AppText(
                     'Tell us About yourself',
                     style: context.textTheme.headlineSmall!.copyWith(
-                      color: AppColors.kBlack100,
+                      color: Theme.of(context).colorScheme.appText,
                       fontWeight: FontWeight.w800,
                     ),
                   ),
@@ -46,7 +47,7 @@ class _AboutYourselfState extends State<AboutYourself> {
                       AppText(
                         'Who do you shop for ?',
                         style: context.textTheme.titleMedium!.copyWith(
-                          color: AppColors.kBlack100,
+                          color: Theme.of(context).colorScheme.appText,
                         ),
                       ),
                       24.verticalSpacing,
@@ -66,7 +67,7 @@ class _AboutYourselfState extends State<AboutYourself> {
                       AppText(
                         'How Old are you ?',
                         style: context.textTheme.titleMedium!.copyWith(
-                          color: AppColors.kBlack100,
+                          color: Theme.of(context).colorScheme.appText,
                         ),
                       ),
                       24.verticalSpacing,
@@ -94,7 +95,7 @@ class _AboutYourselfState extends State<AboutYourself> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
       decoration: BoxDecoration(
-        color: AppColors.kBgLight2,
+        color: Theme.of(context).colorScheme.bgColor,
         borderRadius: BorderRadius.circular(100),
       ),
       child: DropdownButtonHideUnderline(
@@ -103,13 +104,13 @@ class _AboutYourselfState extends State<AboutYourself> {
           hint: AppText(
             'Age Range',
             style: context.textTheme.titleMedium!.copyWith(
-              color: AppColors.kBlack100,
+              color: Theme.of(context).colorScheme.appText,
             ),
           ),
           isExpanded: true,
-          icon: const Icon(
+          icon: Icon(
             Icons.keyboard_arrow_down,
-            color: AppColors.kBlack100,
+            color: Theme.of(context).colorScheme.appText,
           ),
           items: ages.map((String age) {
             return DropdownMenuItem<String>(
@@ -117,7 +118,7 @@ class _AboutYourselfState extends State<AboutYourself> {
               child: AppText(
                 age,
                 style: context.textTheme.bodyMedium!.copyWith(
-                  color: AppColors.kBlack100,
+                  color: Theme.of(context).colorScheme.appText,
                   fontWeight: FontWeight.w600,
                 ),
               ),
