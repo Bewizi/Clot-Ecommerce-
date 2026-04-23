@@ -3,9 +3,9 @@ import 'package:clot/core/ui/components/app_button.dart';
 import 'package:clot/core/ui/components/app_text.dart';
 import 'package:clot/core/ui/components/app_text_field.dart';
 import 'package:clot/core/ui/components/layouts/app_scaffold.dart';
+import 'package:clot/core/ui/extensions/app_color_extension.dart';
 import 'package:clot/core/ui/extensions/app_spacing_extension.dart';
 import 'package:clot/core/ui/extensions/app_theme_extension.dart';
-import 'package:clot/core/variables/colors.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
@@ -120,7 +120,7 @@ class _CreateAccountState extends State<CreateAccount> {
                 TextSpan(
                   text: 'Have an Account ?',
                   style: context.textTheme.bodySmall!.copyWith(
-                    color: AppColors.kBlack100,
+                    color: Theme.of(context).colorScheme.appText,
                   ),
                 ),
                 TextSpan(
@@ -128,7 +128,7 @@ class _CreateAccountState extends State<CreateAccount> {
                     ..onTap = () => SignInRoute().go(context),
                   text: ' Sing In',
                   style: context.textTheme.bodySmall!.copyWith(
-                    color: AppColors.kBlack100,
+                    color: Theme.of(context).colorScheme.appText,
                     fontWeight: FontWeight.bold,
                   ),
                 ),

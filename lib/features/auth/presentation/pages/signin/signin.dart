@@ -3,9 +3,9 @@ import 'package:clot/core/ui/components/app_button.dart';
 import 'package:clot/core/ui/components/app_text.dart';
 import 'package:clot/core/ui/components/app_text_field.dart';
 import 'package:clot/core/ui/components/layouts/app_scaffold.dart';
+import 'package:clot/core/ui/extensions/app_color_extension.dart';
 import 'package:clot/core/ui/extensions/app_spacing_extension.dart';
 import 'package:clot/core/ui/extensions/app_theme_extension.dart';
-import 'package:clot/core/variables/colors.dart';
 import 'package:clot/features/auth/presentation/pages/forgot_password/forgot_password.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -33,7 +33,9 @@ class _SignInState extends State<SignIn> {
         children: [
           AppText(
             'Sign in',
-            style: context.textTheme.headlineLarge,
+            style: context.textTheme.headlineLarge?.copyWith(
+              color: Theme.of(context).colorScheme.appText,
+            ),
           ),
           32.verticalSpacing,
           Form(
@@ -82,7 +84,7 @@ class _SignInState extends State<SignIn> {
                           TextSpan(
                             text: 'Forgot password?',
                             style: context.textTheme.bodySmall!.copyWith(
-                              color: AppColors.kBlack100,
+                              color: Theme.of(context).colorScheme.appText,
                             ),
                           ),
                           TextSpan(
@@ -91,7 +93,7 @@ class _SignInState extends State<SignIn> {
                                   context.push(ForgotPassword.routeName),
                             text: ' Reset',
                             style: context.textTheme.bodySmall!.copyWith(
-                              color: AppColors.kBlack100,
+                              color: Theme.of(context).colorScheme.appText,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -121,7 +123,7 @@ class _SignInState extends State<SignIn> {
                 TextSpan(
                   text: 'Dont have an Account ?',
                   style: context.textTheme.bodySmall!.copyWith(
-                    color: AppColors.kBlack100,
+                    color: Theme.of(context).colorScheme.appText,
                   ),
                 ),
                 TextSpan(
@@ -129,7 +131,7 @@ class _SignInState extends State<SignIn> {
                     ..onTap = () => CreateAccountRoute().go(context),
                   text: ' Create One',
                   style: context.textTheme.bodySmall!.copyWith(
-                    color: AppColors.kBlack100,
+                    color: Theme.of(context).colorScheme.appText,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
