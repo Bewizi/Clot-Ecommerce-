@@ -41,3 +41,9 @@ flutter:
   assets:
     - assets/images/
     - assets/svgs/
+
+flutter_launcher_icons:
+  android: true
+  image_path: "assets/images/logo.png"
+  adaptive_icon_background: "#8E6CEF"
+  adaptive_icon_foreground: "assets/logo_foreground.png"
