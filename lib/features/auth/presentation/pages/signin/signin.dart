@@ -6,9 +6,11 @@ import 'package:clot/core/ui/components/layouts/app_scaffold.dart';
 import 'package:clot/core/ui/extensions/app_color_extension.dart';
 import 'package:clot/core/ui/extensions/app_spacing_extension.dart';
 import 'package:clot/core/ui/extensions/app_theme_extension.dart';
+import 'package:clot/core/variables/app_svg.dart';
 import 'package:clot/features/auth/presentation/pages/forgot_password/forgot_password.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 
 class SignIn extends StatefulWidget {
@@ -138,8 +140,72 @@ class _SignInState extends State<SignIn> {
               ],
             ),
           ),
+
+          64.verticalSpacing,
+
+          buildSignInOptions(
+            context,
+            () {},
+            'Continue With Apple',
+            AppSvg.kAppleIcon,
+          ),
+          16.verticalSpacing,
+          buildSignInOptions(
+            context,
+            () {},
+            'Continue With Google',
+            AppSvg.kGoogleIcon,
+          ),
+          16.verticalSpacing,
+          buildSignInOptions(
+            context,
+            () {},
+            'Continue With Facebook',
+            AppSvg.kFaceBookIcon,
+          ),
         ],
       ),
+    );
+  }
+
+  Widget buildSignInOptions(
+    BuildContext context,
+    VoidCallback? onTap,
+    String text,
+    String icon,
+  ) {
+    return Column(
+      children: [
+        GestureDetector(
+          onTap: onTap,
+          child: Container(
+            padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
+            width: double.infinity,
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.bgColor,
+              borderRadius: BorderRadius.circular(100),
+            ),
+            child: Row(
+              children: [
+                SvgPicture.asset(
+                  icon,
+                  fit: BoxFit.cover,
+                  width: 24,
+                  height: 24,
+                ),
+                8.horizontalSpacing,
+                Expanded(
+                  child: Center(
+                    child: AppText(
+                      text,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
