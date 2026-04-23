@@ -1,4 +1,4 @@
-import 'package:clot/core/variables/colors.dart';
+import 'package:clot/core/ui/extensions/app_color_extension.dart';
 import 'package:flutter/material.dart';
 
 class AppBackButton extends StatelessWidget {
@@ -13,14 +13,14 @@ class AppBackButton extends StatelessWidget {
           Navigator.pop(context);
         },
         child: Container(
-          decoration: const BoxDecoration(
-            color: AppColors.kBgLight2,
+          decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.bgColor,
             shape: BoxShape.circle,
           ),
-          child: const Center(
+          child: Center(
             child: Icon(
               Icons.arrow_back_ios_new_outlined,
-              color: AppColors.kBlack100,
+              color: Theme.of(context).colorScheme.appText,
             ),
           ),
         ),
