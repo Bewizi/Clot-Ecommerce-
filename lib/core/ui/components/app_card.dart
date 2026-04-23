@@ -1,5 +1,4 @@
 import 'package:clot/core/variables/app_radius.dart';
-import 'package:clot/core/variables/colors.dart';
 import 'package:flutter/material.dart';
 
 class AppCard extends StatelessWidget {
@@ -12,7 +11,7 @@ class AppCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
-        color: AppColors.kWhite,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(AppRadius.lager),
       ),
       child: child,
