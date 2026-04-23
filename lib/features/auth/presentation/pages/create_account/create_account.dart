@@ -42,7 +42,7 @@ class _CreateAccountState extends State<CreateAccount> {
                 AppTextField(
                   hintText: 'Firstname',
                   controller: emailController,
-                  prefixIcon: const Icon(Icons.email_outlined),
+                  prefixIcon: const Icon(Icons.person),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter your firstname';
@@ -56,7 +56,7 @@ class _CreateAccountState extends State<CreateAccount> {
                 AppTextField(
                   hintText: 'Lastname',
                   controller: emailController,
-                  prefixIcon: const Icon(Icons.email_outlined),
+                  prefixIcon: const Icon(Icons.person),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter your lastname';
