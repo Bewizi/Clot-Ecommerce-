@@ -28,11 +28,6 @@ class _CreateAccountState extends State<CreateAccount> {
   final TextEditingController passwordController = TextEditingController();
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   void dispose() {
     firstNameController.dispose();
     lastNameController.dispose();
@@ -60,7 +55,10 @@ class _CreateAccountState extends State<CreateAccount> {
                 );
               }
 
-              if (state is AccountCreated) {
+              // No Supabase call has happened yet at this point.
+              // The data is just stored in the bloc state.
+              // Navigate to AboutYourself to collect gender and age.
+              if (state is AccountDetailsStored) {
                 AboutYourselfRoute().go(context);
               }
             },
@@ -69,7 +67,6 @@ class _CreateAccountState extends State<CreateAccount> {
                 key: formKey,
                 child: Column(
                   children: [
-                    // firstname
                     AppTextField(
                       hintText: 'Firstname',
                       controller: firstNameController,
@@ -78,12 +75,9 @@ class _CreateAccountState extends State<CreateAccount> {
                         if (value == null || value.isEmpty) {
                           return 'Please enter your firstname';
                         }
-
                         return null;
                       },
                     ),
-
-                    // lastname
                     AppTextField(
                       hintText: 'Lastname',
                       controller: lastNameController,
@@ -95,8 +89,6 @@ class _CreateAccountState extends State<CreateAccount> {
                         return null;
                       },
                     ),
-
-                    //email
                     AppTextField(
                       hintText: 'Email Address',
                       controller: emailController,
@@ -111,8 +103,6 @@ class _CreateAccountState extends State<CreateAccount> {
                         return null;
                       },
                     ),
-
-                    // password
                     AppTextField(
                       hintText: 'Password',
                       controller: passwordController,
@@ -129,25 +119,24 @@ class _CreateAccountState extends State<CreateAccount> {
                         return null;
                       },
                     ),
-
                     32.verticalSpacing,
                     PrimaryButton(
-                      pressed: state is AuthLoading
-                          ? null
-                          : () {
-                              if (formKey.currentState!.validate()) {
-                                context.read<AuthBloc>().add(
-                                  RegisterAccount(
-                                    firstName: firstNameController.text.trim(),
-                                    lastName: lastNameController.text.trim(),
-                                    email: emailController.text.trim(),
-                                    password: passwordController.text.trim(),
-                                  ),
-                                );
-                              }
-                            },
-                      state is AuthLoading ? 'Continue' : 'Create Account',
-                      loading: state is AuthLoading,
+                      // No loading state here — StoreAccountDetails is
+                      // synchronous (no network call), so the button
+                      // never needs to show a spinner on this screen.
+                      pressed: () {
+                        if (formKey.currentState!.validate()) {
+                          context.read<AuthBloc>().add(
+                            StoreAccountDetails(
+                              firstName: firstNameController.text.trim(),
+                              lastName: lastNameController.text.trim(),
+                              email: emailController.text.trim(),
+                              password: passwordController.text.trim(),
+                            ),
+                          );
+                        }
+                      },
+                      'Continue',
                     ),
                   ],
                 ),
@@ -168,7 +157,7 @@ class _CreateAccountState extends State<CreateAccount> {
                 TextSpan(
                   recognizer: TapGestureRecognizer()
                     ..onTap = () => SignInRoute().go(context),
-                  text: ' Sing In',
+                  text: ' Sign In',
                   style: context.textTheme.bodySmall!.copyWith(
                     color: Theme.of(context).colorScheme.appText,
                     fontWeight: FontWeight.bold,
