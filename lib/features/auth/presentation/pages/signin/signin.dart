@@ -7,9 +7,11 @@ import 'package:clot/core/ui/extensions/app_color_extension.dart';
 import 'package:clot/core/ui/extensions/app_spacing_extension.dart';
 import 'package:clot/core/ui/extensions/app_theme_extension.dart';
 import 'package:clot/core/variables/app_svg.dart';
+import 'package:clot/features/auth/presentation/bloc/bloc/auth_bloc.dart';
 import 'package:clot/features/auth/presentation/pages/forgot_password/forgot_password.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 
@@ -28,6 +30,14 @@ class _SignInState extends State<SignIn> {
   final TextEditingController passwordController = TextEditingController();
 
   @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return AppScaffold(
       body: Column(
@@ -40,82 +50,107 @@ class _SignInState extends State<SignIn> {
             ),
           ),
           32.verticalSpacing,
-          Form(
-            key: formKey,
-            child: Column(
-              children: [
-                AppTextField(
-                  hintText: 'Email Address',
-                  controller: emailController,
-                  prefixIcon: const Icon(Icons.email_outlined),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your email address';
-                    }
-                    if (!value.contains('@')) {
-                      return 'Please enter a valid email address';
-                    }
-                    return null;
-                  },
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+          BlocConsumer<AuthBloc, AuthState>(
+            listener: (context, state) {
+              if (state is AuthError) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text(state.message)),
+                );
+              }
+
+              if (state is AuthSuccess) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text("User signed in successfully!")),
+                );
+              }
+            },
+            builder: (context, state) {
+              return Form(
+                key: formKey,
+                child: Column(
                   children: [
                     AppTextField(
-                      hintText: 'Password',
-                      controller: passwordController,
-                      prefixIcon: const Icon(Icons.lock_outline_rounded),
-                      suffixIcon: const Icon(Icons.visibility_outlined),
-                      obscureText: true,
+                      hintText: 'Email Address',
+                      controller: emailController,
+                      prefixIcon: const Icon(Icons.email_outlined),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Please enter your password';
+                          return 'Please enter your email address';
                         }
-                        if (value.length < 6) {
-                          return 'Password must be at least 6 characters';
+                        if (!value.contains('@')) {
+                          return 'Please enter a valid email address';
                         }
                         return null;
                       },
                     ),
-                    16.verticalSpacing,
-                    Align(
-                      alignment: Alignment.bottomRight,
-                      child: AppRichText(
-                        textAlign: TextAlign.end,
-                        spans: [
-                          TextSpan(
-                            text: 'Forgot password?',
-                            style: context.textTheme.bodySmall!.copyWith(
-                              color: Theme.of(context).colorScheme.appText,
-                            ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        AppTextField(
+                          hintText: 'Password',
+                          controller: passwordController,
+                          prefixIcon: const Icon(Icons.lock_outline_rounded),
+                          suffixIcon: const Icon(Icons.visibility_outlined),
+                          obscureText: true,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter your password';
+                            }
+                            if (value.length < 6) {
+                              return 'Password must be at least 6 characters';
+                            }
+                            return null;
+                          },
+                        ),
+                        16.verticalSpacing,
+                        Align(
+                          alignment: Alignment.bottomRight,
+                          child: AppRichText(
+                            textAlign: TextAlign.end,
+                            spans: [
+                              TextSpan(
+                                text: 'Forgot password?',
+                                style: context.textTheme.bodySmall!.copyWith(
+                                  color: Theme.of(context).colorScheme.appText,
+                                ),
+                              ),
+                              TextSpan(
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () =>
+                                      context.push(ForgotPassword.routeName),
+                                text: ' Reset',
+                                style: context.textTheme.bodySmall!.copyWith(
+                                  color: Theme.of(context).colorScheme.appText,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
                           ),
-                          TextSpan(
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = () =>
-                                  context.push(ForgotPassword.routeName),
-                            text: ' Reset',
-                            style: context.textTheme.bodySmall!.copyWith(
-                              color: Theme.of(context).colorScheme.appText,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
+                        ),
+                      ],
+                    ),
+
+                    32.verticalSpacing,
+                    PrimaryButton(
+                      pressed: state is AuthLoading
+                          ? null
+                          : () {
+                              if (formKey.currentState!.validate()) {
+                                context.read<AuthBloc>().add(
+                                  SignInUser(
+                                    email: emailController.text.trim(),
+                                    password: passwordController.text.trim(),
+                                  ),
+                                );
+                              }
+                            },
+                      state is AuthLoading ? 'Signing in...' : 'Sign in',
+                      loading: state is AuthLoading,
                     ),
                   ],
                 ),
-
-                32.verticalSpacing,
-                PrimaryButton(
-                  pressed: () {
-                    if (formKey.currentState!.validate()) {
-                      // TODO: Sign in user
-                    }
-                  },
-                  'Sign in',
-                ),
-              ],
-            ),
+              );
+            },
           ),
           16.verticalSpacing,
           Align(
