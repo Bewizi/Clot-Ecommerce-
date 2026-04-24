@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:clot/features/auth/domain/auth_repository.dart';
-import 'package:clot/features/auth/presentation/pages/create_account/create_account.dart';
 import 'package:equatable/equatable.dart';
 
 part 'auth_event.dart';
@@ -10,12 +9,29 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final AuthRepository authRepository;
 
   AuthBloc(this.authRepository) : super(AuthInitial()) {
+    on<StoreAccountDetails>(_storeAccountDetails);
     on<RegisterAccount>(_registerAccount);
-    on<UpdateProfile>(_updateProfile);
     on<SignIn>(_signIn);
     on<SignOut>(_signOut);
   }
 
+  // Step 1: no Supabase call — just stores the form data in state
+  // so AboutYourself can read it later via context.read<AuthBloc>().state
+  void _storeAccountDetails(
+    StoreAccountDetails event,
+    Emitter<AuthState> emit,
+  ) {
+    emit(
+      AccountDetailsStored(
+        firstName: event.firstName,
+        lastName: event.lastName,
+        email: event.email,
+        password: event.password,
+      ),
+    );
+  }
+
+  // Step 2: the actual Supabase signUp + single insert with ALL fields
   Future<void> _registerAccount(
     RegisterAccount event,
     Emitter<AuthState> emit,
@@ -27,25 +43,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         lastname: event.lastName,
         email: event.email,
         password: event.password,
-      );
-      emit(AccountCreated());
-    } on Exception catch (e) {
-      emit(AuthError(e.toString()));
-    }
-  }
-
-  Future<void> _updateProfile(
-    UpdateProfile event,
-    Emitter<AuthState> emit,
-  ) async {
-    emit(AuthLoading());
-    try {
-      await authRepository.updateProfile(
-        userId: event.userId,
         gender: event.gender,
         age: event.age,
       );
-      emit(const AuthSuccess(message: 'Profile updated successfully'));
+      emit(const AuthSuccess(message: 'Account created successfully'));
     } on Exception catch (e) {
       emit(AuthError(e.toString()));
     }

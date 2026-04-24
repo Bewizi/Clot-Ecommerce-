@@ -7,38 +7,55 @@ sealed class AuthEvent extends Equatable {
   List<Object> get props => [];
 }
 
-
-class RegisterAccount extends AuthEvent {
-  const RegisterAccount({
+// Step 1 — dispatched from CreateAccount screen.
+// No Supabase call yet. Just stores details temporarily in the bloc state
+// so AboutYourself can read them when dispatching RegisterAccount.
+class StoreAccountDetails extends AuthEvent {
+  const StoreAccountDetails({
     required this.firstName,
     required this.lastName,
     required this.email,
     required this.password,
-    this.gender,
-    this.age,
   });
 
   final String firstName;
   final String lastName;
   final String email;
   final String password;
-  final String? gender;
-  final int? age;
+
+  @override
+  List<Object> get props => [firstName, lastName, email, password];
 }
 
-class UpdateProfile extends AuthEvent {
-  const UpdateProfile({
-    required this.userId,
+// Step 2 — dispatched from AboutYourself screen.
+// This is the ONLY place the Supabase signUp + insert happens.
+// All fields including gender and age are inserted together in one call.
+class RegisterAccount extends AuthEvent {
+  const RegisterAccount({
+    required this.firstName,
+    required this.lastName,
+    required this.email,
+    required this.password,
     required this.gender,
     required this.age,
   });
 
-  final String userId;
-  final String gender;
-  final int age;
+  final String firstName;
+  final String lastName;
+  final String email;
+  final String password;
+  final String gender; // 'male' or 'female' — matches DB CHECK constraint
+  final int age; // 0–120 — matches DB CHECK constraint
 
   @override
-  List<Object> get props => [userId, gender, age];
+  List<Object> get props => [
+    firstName,
+    lastName,
+    email,
+    password,
+    gender,
+    age,
+  ];
 }
 
 class SignIn extends AuthEvent {
@@ -49,6 +66,9 @@ class SignIn extends AuthEvent {
 
   final String email;
   final String password;
+
+  @override
+  List<Object> get props => [email, password];
 }
 
 class SignOut extends AuthEvent {}

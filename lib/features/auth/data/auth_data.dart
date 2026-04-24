@@ -5,25 +5,35 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 class AuthData implements AuthRepository {
   @override
   Future<void> createAccount({
-    String? firstname,
-    String? lastname,
-    String? email,
-    String? password,
-    String? gender,
-    int? age,
+    required String firstname,
+    required String lastname,
+    required String email,
+    required String password,
+    required String gender,
+    required int age,
   }) async {
     try {
       final response = await supaBase.auth.signUp(
         email: email,
-        password: password!,
+        password: password,
       );
+
       if (response.user != null) {
         final userId = response.user!.id;
+
+        // Single insert with ALL fields — no update needed later.
+        // profile_id  → FK to auth.users(id), stores the user's UUID
+        // firstname   → matches column name in clot.profile exactly
+        // lastname    → matches column name in clot.profile exactly
+        // gender      → 'male' or 'female', enforced by DB CHECK constraint
+        // age         → 0–120, enforced by DB CHECK constraint
         await supaBase.schema('clot').from('profile').insert({
           'profile_id': userId,
           'firstname': firstname,
           'lastname': lastname,
           'email': email,
+          'gender': gender,
+          'age': age,
         });
       }
     } on AuthException catch (e) {
@@ -32,26 +42,6 @@ class AuthData implements AuthRepository {
       );
     } catch (e) {
       throw Exception('Failed to create account: $e');
-    }
-  }
-
-  @override
-  Future<void> updateProfile({
-    required String userId,
-    required String gender,
-    required int age,
-  }) async {
-    try {
-      await supaBase
-          .schema('clot')
-          .from('profile')
-          .update({
-            'gender': gender,
-            'age': age,
-          })
-          .eq('profile_id', userId);
-    } catch (e) {
-      throw Exception('Failed to update profile: $e');
     }
   }
 
@@ -79,7 +69,10 @@ class AuthData implements AuthRepository {
 
   @override
   Future<void> signOut() async {
-    // TODO: implement signOut
-    throw UnimplementedError();
+    try {
+      await supaBase.auth.signOut();
+    } catch (e) {
+      throw Exception('Failed to sign out: $e');
+    }
   }
 }
