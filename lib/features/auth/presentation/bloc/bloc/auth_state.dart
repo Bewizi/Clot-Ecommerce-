@@ -21,7 +21,7 @@ final class AuthLoaded extends AuthState {
 }
 
 // Emitted after StoreAccountDetails is dispatched.
-// Holds step 1 data so AboutYourself can read it from the bloc state
+// Holds  data so AboutYourself can read it from the bloc state
 // and combine it with gender + age when dispatching RegisterAccount.
 final class AccountDetailsStored extends AuthState {
   const AccountDetailsStored({
@@ -40,7 +40,7 @@ final class AccountDetailsStored extends AuthState {
   List<Object> get props => [firstName, lastName, email, password];
 }
 
-// Emitted after RegisterAccount (step 2) succeeds.
+// Emitted after RegisterAccount  succeeds.
 // Signals the UI to navigate to Home.
 final class AuthSuccess extends AuthState {
   const AuthSuccess({required this.message});

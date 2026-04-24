@@ -11,11 +11,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc(this.authRepository) : super(AuthInitial()) {
     on<StoreAccountDetails>(_storeAccountDetails);
     on<RegisterAccount>(_registerAccount);
-    on<SignIn>(_signIn);
+    on<SignInUser>(_signIn);
     on<SignOut>(_signOut);
   }
 
-  // Step 1: no Supabase call — just stores the form data in state
+  // no Supabase call — just stores the form data in state
   // so AboutYourself can read it later via context.read<AuthBloc>().state
   void _storeAccountDetails(
     StoreAccountDetails event,
@@ -31,7 +31,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     );
   }
 
-  // Step 2: the actual Supabase signUp + single insert with ALL fields
+  // the actual Supabase signUp + single insert with ALL fields
   Future<void> _registerAccount(
     RegisterAccount event,
     Emitter<AuthState> emit,
@@ -53,7 +53,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   Future<void> _signIn(
-    SignIn event,
+    SignInUser event,
     Emitter<AuthState> emit,
   ) async {
     emit(AuthLoading());

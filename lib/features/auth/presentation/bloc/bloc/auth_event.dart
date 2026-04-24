@@ -7,7 +7,6 @@ sealed class AuthEvent extends Equatable {
   List<Object> get props => [];
 }
 
-// Step 1 — dispatched from CreateAccount screen.
 // No Supabase call yet. Just stores details temporarily in the bloc state
 // so AboutYourself can read them when dispatching RegisterAccount.
 class StoreAccountDetails extends AuthEvent {
@@ -27,7 +26,6 @@ class StoreAccountDetails extends AuthEvent {
   List<Object> get props => [firstName, lastName, email, password];
 }
 
-// Step 2 — dispatched from AboutYourself screen.
 // This is the ONLY place the Supabase signUp + insert happens.
 // All fields including gender and age are inserted together in one call.
 class RegisterAccount extends AuthEvent {
@@ -44,8 +42,8 @@ class RegisterAccount extends AuthEvent {
   final String lastName;
   final String email;
   final String password;
-  final String gender; // 'male' or 'female' — matches DB CHECK constraint
-  final int age; // 0–120 — matches DB CHECK constraint
+  final String gender;
+  final int age;
 
   @override
   List<Object> get props => [
@@ -58,8 +56,8 @@ class RegisterAccount extends AuthEvent {
   ];
 }
 
-class SignIn extends AuthEvent {
-  const SignIn({
+class SignInUser extends AuthEvent {
+  const SignInUser({
     required this.email,
     required this.password,
   });
