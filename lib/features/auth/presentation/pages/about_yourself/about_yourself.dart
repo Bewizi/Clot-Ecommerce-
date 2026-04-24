@@ -20,8 +20,6 @@ class AboutYourself extends StatefulWidget {
 }
 
 class _AboutYourselfState extends State<AboutYourself> {
-  // UI label — 'Men' or 'Women'
-  // Defaulting to 'Men' so a gender is always pre-selected
   String? selectedGender = 'Men';
   String? selectedAge;
 
