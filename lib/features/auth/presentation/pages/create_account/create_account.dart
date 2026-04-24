@@ -55,7 +55,6 @@ class _CreateAccountState extends State<CreateAccount> {
                 );
               }
 
-              // No Supabase call has happened yet at this point.
               // The data is just stored in the bloc state.
               // Navigate to AboutYourself to collect gender and age.
               if (state is AccountDetailsStored) {
