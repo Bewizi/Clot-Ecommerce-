@@ -5,6 +5,7 @@ import 'package:clot/core/ui/components/app_text_field.dart';
 import 'package:clot/core/ui/components/layouts/app_scaffold.dart';
 import 'package:clot/core/ui/extensions/app_spacing_extension.dart';
 import 'package:clot/core/ui/extensions/app_theme_extension.dart';
+import 'package:clot/features/auth/presentation/widgets/mixin/redirect_to_login.dart';
 import 'package:flutter/material.dart';
 
 class ForgotPassword extends StatefulWidget {
@@ -16,7 +17,7 @@ class ForgotPassword extends StatefulWidget {
   State<ForgotPassword> createState() => _ForgotPasswordState();
 }
 
-class _ForgotPasswordState extends State<ForgotPassword> {
+class _ForgotPasswordState extends State<ForgotPassword> with RedirectToLogin {
   final formKey = GlobalKey<FormState>();
   final TextEditingController emailController = TextEditingController();
 
@@ -56,9 +57,9 @@ class _ForgotPasswordState extends State<ForgotPassword> {
 
                 32.verticalSpacing,
                 PrimaryButton(
-                  pressed: () {
+                  pressed: () async {
                     if (formKey.currentState!.validate()) {
-                      // TODO: Sign in user
+                      await showRedirectToLoginDialog(context);
                     }
                   },
                   'Continue',
