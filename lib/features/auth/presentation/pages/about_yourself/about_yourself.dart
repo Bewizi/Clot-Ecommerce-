@@ -1,3 +1,4 @@
+import 'package:clot/core/navigation/app_router.dart';
 import 'package:clot/core/ui/components/app_button.dart';
 import 'package:clot/core/ui/components/app_text.dart';
 import 'package:clot/core/ui/components/layouts/app_scaffold.dart';
@@ -8,7 +9,6 @@ import 'package:clot/core/variables/colors.dart';
 import 'package:clot/features/auth/presentation/bloc/bloc/auth_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:supabase_flutter/supabase_flutter.dart' as supabase;
 
 class AboutYourself extends StatefulWidget {
   const AboutYourself({super.key});
@@ -20,14 +20,15 @@ class AboutYourself extends StatefulWidget {
 }
 
 class _AboutYourselfState extends State<AboutYourself> {
+  // UI label — 'Men' or 'Women'
+  // Defaulting to 'Men' so a gender is always pre-selected
   String? selectedGender = 'Men';
   String? selectedAge;
 
   final List<String> ages = List.generate(121, (index) => index.toString());
 
-  String _toDbGender(String label) {
-    return label == 'Men' ? 'male' : 'female';
-  }
+  // Maps the UI label to what the DB CHECK constraint accepts
+  String _toDbGender(String label) => label == 'Men' ? 'male' : 'female';
 
   @override
   Widget build(BuildContext context) {
@@ -40,9 +41,10 @@ class _AboutYourselfState extends State<AboutYourself> {
             );
           }
 
+          // Single insert succeeded — navigate to Home
           if (state is AuthSuccess) {
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Profile Updated Successfully')),
+              const SnackBar(content: Text("User registered successfully!")),
             );
           }
         },
@@ -104,24 +106,41 @@ class _AboutYourselfState extends State<AboutYourself> {
                 'Finish',
                 color: AppColors.kPrimary,
                 textColor: AppColors.kWhite,
+                loading: state is AuthLoading,
                 pressed:
                     (selectedGender != null &&
                         selectedAge != null &&
                         state is! AuthLoading)
                     ? () {
-                        final userId = supabase
-                            .Supabase
-                            .instance
-                            .client
-                            .auth
-                            .currentUser
-                            ?.id;
+                        // Read the stored step 1 details from the bloc state.
+                        // We know it's AccountDetailsStored because that's
+                        // what CreateAccount emitted before navigating here.
+                        final storedState = context.read<AuthBloc>().state;
 
+                        if (storedState is! AccountDetailsStored) {
+                          // Safety guard — should never happen in normal flow.
+                          // If somehow the state was lost, send the user back.
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text(
+                                'Session expired. Please fill your details again.',
+                              ),
+                            ),
+                          );
+                          CreateAccountRoute().go(context);
+                          return;
+                        }
+
+                        // Dispatch RegisterAccount with ALL fields combined.
+                        // This is the single Supabase signUp + insert call.
                         context.read<AuthBloc>().add(
-                          UpdateProfile(
-                            age: int.parse(selectedAge!),
+                          RegisterAccount(
+                            firstName: storedState.firstName,
+                            lastName: storedState.lastName,
+                            email: storedState.email,
+                            password: storedState.password,
                             gender: _toDbGender(selectedGender!),
-                            userId: userId!,
+                            age: int.parse(selectedAge!),
                           ),
                         );
                       }
@@ -145,7 +164,7 @@ class _AboutYourselfState extends State<AboutYourself> {
         child: DropdownButton<String>(
           value: selectedAge,
           hint: AppText(
-            'Age Range',
+            'Select Age',
             style: context.textTheme.titleMedium!.copyWith(
               color: Theme.of(context).colorScheme.appText,
             ),
