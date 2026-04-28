@@ -75,4 +75,19 @@ class AuthData implements AuthRepository {
       throw Exception('Failed to sign out: $e');
     }
   }
+
+  @override
+  Future<void> forgotPassword({
+    required String email,
+  }) async {
+    try {
+      await supaBase.auth.resetPasswordForEmail(
+        email,
+        redirectTo: 'io.supabase.clot://reset-password',
+        captchaToken: email,
+      );
+    } catch (e) {
+      throw Exception('Failed to request password reset: $e');
+    }
+  }
 }

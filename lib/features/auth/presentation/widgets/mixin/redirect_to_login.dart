@@ -35,7 +35,7 @@ mixin RedirectToLogin {
                 ),
                 24.verticalSpacing,
                 AppText(
-                  'We Sent you an Email to reset your password.',
+                  'We Sent you an Email to reset\n your password.',
                   style: titleStyle,
                   textAlign: TextAlign.center,
                 ),

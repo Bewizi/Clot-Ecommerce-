@@ -15,4 +15,8 @@ abstract class AuthRepository {
   });
 
   Future<void> signOut();
+
+  Future<void> forgotPassword({
+    required String email,
+  });
 }

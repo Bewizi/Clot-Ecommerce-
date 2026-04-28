@@ -5,8 +5,10 @@ import 'package:clot/core/ui/components/app_text_field.dart';
 import 'package:clot/core/ui/components/layouts/app_scaffold.dart';
 import 'package:clot/core/ui/extensions/app_spacing_extension.dart';
 import 'package:clot/core/ui/extensions/app_theme_extension.dart';
+import 'package:clot/features/auth/presentation/bloc/bloc/auth_bloc.dart';
 import 'package:clot/features/auth/presentation/widgets/mixin/redirect_to_login.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ForgotPassword extends StatefulWidget {
   const ForgotPassword({super.key});
@@ -36,36 +38,54 @@ class _ForgotPasswordState extends State<ForgotPassword> with RedirectToLogin {
             style: context.textTheme.headlineLarge,
           ),
           32.verticalSpacing,
-          Form(
-            key: formKey,
-            child: Column(
-              children: [
-                AppTextField(
-                  hintText: 'Email Address',
-                  controller: emailController,
-                  prefixIcon: const Icon(Icons.email_outlined),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your email address';
-                    }
-                    if (!value.contains('@')) {
-                      return 'Please enter a valid email address';
-                    }
-                    return null;
-                  },
-                ),
+          BlocConsumer<AuthBloc, AuthState>(
+            listener: (context, state) async {
+              if (state is PasswordResetEmailSent) {
+                await showRedirectToLoginDialog(context);
+              } else if (state is AuthError) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text(state.message)),
+                );
+              }
+            },
+            builder: (context, state) {
+              return Form(
+                key: formKey,
+                child: Column(
+                  children: [
+                    AppTextField(
+                      hintText: 'Email Address',
+                      controller: emailController,
+                      prefixIcon: const Icon(Icons.email_outlined),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter your email address';
+                        }
+                        if (!value.contains('@')) {
+                          return 'Please enter a valid email address';
+                        }
+                        return null;
+                      },
+                    ),
 
-                32.verticalSpacing,
-                PrimaryButton(
-                  pressed: () async {
-                    if (formKey.currentState!.validate()) {
-                      await showRedirectToLoginDialog(context);
-                    }
-                  },
-                  'Continue',
+                    32.verticalSpacing,
+                    PrimaryButton(
+                      pressed: state is AuthLoading
+                          ? null
+                          : () {
+                              if (formKey.currentState!.validate()) {
+                                context.read<AuthBloc>().add(
+                                  ResetPassword(email: emailController.text),
+                                );
+                              }
+                            },
+                      state is AuthLoading ? 'Sending...' : 'Continue',
+                      loading: state is AuthLoading,
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              );
+            },
           ),
         ],
       ),

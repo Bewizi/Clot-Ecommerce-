@@ -13,6 +13,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<RegisterAccount>(_registerAccount);
     on<SignInUser>(_signIn);
     on<SignOut>(_signOut);
+    on<ResetPassword>(_resetPassword);
   }
 
   // no Supabase call — just stores the form data in state
@@ -76,6 +77,23 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     try {
       await authRepository.signOut();
       emit(const AuthSuccess(message: 'Signed out successfully'));
+    } on Exception catch (e) {
+      emit(AuthError(e.toString()));
+    }
+  }
+
+  Future<void> _resetPassword(
+    ResetPassword event,
+    Emitter<AuthState> emit,
+  ) async {
+    emit(AuthLoading());
+    try {
+      await authRepository.forgotPassword(email: event.email);
+      emit(
+        const PasswordResetEmailSent(
+          message: 'Password reset email sent successfully',
+        ),
+      );
     } on Exception catch (e) {
       emit(AuthError(e.toString()));
     }
