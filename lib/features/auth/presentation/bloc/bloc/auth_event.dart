@@ -90,3 +90,25 @@ class GetUserData extends AuthEvent {
   @override
   List<Object> get props => [userId];
 }
+
+class VerifyOtp extends AuthEvent {
+  const VerifyOtp({
+    required this.email,
+    required this.token,
+  });
+
+  final String email;
+  final String token;
+
+  @override
+  List<Object> get props => [email, token];
+}
+
+class UpdatePassword extends AuthEvent {
+  const UpdatePassword({required this.newPassword});
+
+  final String newPassword;
+
+  @override
+  List<Object> get props => [newPassword];
+}

@@ -14,6 +14,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<SignInUser>(_signIn);
     on<SignOut>(_signOut);
     on<ResetPassword>(_resetPassword);
+    on<VerifyOtp>(_verifyOtp);
+    on<UpdatePassword>(_updatePassword);
   }
 
   // no Supabase call — just stores the form data in state
@@ -94,6 +96,35 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           message: 'Password reset email sent successfully',
         ),
       );
+    } on Exception catch (e) {
+      emit(AuthError(e.toString()));
+    }
+  }
+
+  Future<void> _verifyOtp(
+    VerifyOtp event,
+    Emitter<AuthState> emit,
+  ) async {
+    emit(AuthLoading());
+    try {
+      await authRepository.verifyOtp(
+        email: event.email,
+        token: event.token,
+      );
+      emit(OtpVerified());
+    } on Exception catch (e) {
+      emit(AuthError(e.toString()));
+    }
+  }
+
+  Future<void> _updatePassword(
+    UpdatePassword event,
+    Emitter<AuthState> emit,
+  ) async {
+    emit(AuthLoading());
+    try {
+      await authRepository.updatePassword(newPassword: event.newPassword);
+      emit(const PasswordUpdated(message: 'Password updated successfully'));
     } on Exception catch (e) {
       emit(AuthError(e.toString()));
     }

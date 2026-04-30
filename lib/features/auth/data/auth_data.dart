@@ -83,11 +83,36 @@ class AuthData implements AuthRepository {
     try {
       await supaBase.auth.resetPasswordForEmail(
         email,
-        redirectTo: 'io.supabase.clot://reset-password',
-        captchaToken: email,
       );
     } catch (e) {
       throw Exception('Failed to request password reset: $e');
+    }
+  }
+
+  @override
+  Future<void> verifyOtp({
+    required String email,
+    required String token,
+  }) async {
+    try {
+      await supaBase.auth.verifyOTP(
+        type: OtpType.recovery,
+        email: email,
+        token: token,
+      );
+    } catch (e) {
+      throw Exception('Invalid or expired OTP:: $e');
+    }
+  }
+
+  @override
+  Future<void> updatePassword({required String newPassword}) async {
+    try {
+      await supaBase.auth.updateUser(
+        UserAttributes(password: newPassword),
+      );
+    } catch (e) {
+      throw Exception('Failed to update password: $e');
     }
   }
 }
