@@ -1,6 +1,7 @@
 import 'package:clot/features/auth/presentation/pages/about_yourself/about_yourself.dart';
 import 'package:clot/features/auth/presentation/pages/create_account/create_account.dart';
 import 'package:clot/features/auth/presentation/pages/forgot_password/forgot_password.dart';
+import 'package:clot/features/auth/presentation/pages/forgot_password/otp_reset_password.dart';
 import 'package:clot/features/auth/presentation/pages/signin/signin.dart';
 import 'package:clot/features/splash_screen/splash_screen.dart';
 import 'package:flutter/material.dart';
@@ -62,6 +63,21 @@ class ForgotPasswordRoute extends GoRouteData with $ForgotPasswordRoute {
   @override
   Widget build(BuildContext context, GoRouterState state) =>
       const ForgotPassword();
+}
+
+// reset password
+@TypedGoRoute<OtpResetPasswordRoute>(path: OtpResetPasswordRoute.path)
+class OtpResetPasswordRoute extends GoRouteData with $OtpResetPasswordRoute {
+  const OtpResetPasswordRoute({required this.email});
+
+  static const path = '/otp-reset-password';
+
+  final String email;
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) => OtpResetPassword(
+    email: email,
+  );
 }
 
 // about yourself

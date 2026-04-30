@@ -11,6 +11,7 @@ List<RouteBase> get $appRoutes => [
   $createAccountRoute,
   $signInRoute,
   $forgotPasswordRoute,
+  $otpResetPasswordRoute,
   $aboutYourselfRoute,
 ];
 
@@ -98,6 +99,37 @@ mixin $ForgotPasswordRoute on GoRouteData {
 
   @override
   String get location => GoRouteData.$location('/forgot-password');
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $otpResetPasswordRoute => GoRouteData.$route(
+  path: '/otp-reset-password',
+  factory: $OtpResetPasswordRoute._fromState,
+);
+
+mixin $OtpResetPasswordRoute on GoRouteData {
+  static OtpResetPasswordRoute _fromState(GoRouterState state) =>
+      OtpResetPasswordRoute(email: state.uri.queryParameters['email']!);
+
+  OtpResetPasswordRoute get _self => this as OtpResetPasswordRoute;
+
+  @override
+  String get location => GoRouteData.$location(
+    '/otp-reset-password',
+    queryParams: {'email': _self.email},
+  );
 
   @override
   void go(BuildContext context) => context.go(location);
