@@ -1,3 +1,4 @@
+import 'package:clot/core/navigation/app_router.dart';
 import 'package:clot/core/ui/components/app_back_button.dart';
 import 'package:clot/core/ui/components/app_button.dart';
 import 'package:clot/core/ui/components/app_text.dart';
@@ -6,7 +7,6 @@ import 'package:clot/core/ui/components/layouts/app_scaffold.dart';
 import 'package:clot/core/ui/extensions/app_spacing_extension.dart';
 import 'package:clot/core/ui/extensions/app_theme_extension.dart';
 import 'package:clot/features/auth/presentation/bloc/bloc/auth_bloc.dart';
-import 'package:clot/features/auth/presentation/widgets/mixin/redirect_to_login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -19,7 +19,7 @@ class ForgotPassword extends StatefulWidget {
   State<ForgotPassword> createState() => _ForgotPasswordState();
 }
 
-class _ForgotPasswordState extends State<ForgotPassword> with RedirectToLogin {
+class _ForgotPasswordState extends State<ForgotPassword> {
   final formKey = GlobalKey<FormState>();
   final TextEditingController emailController = TextEditingController();
 
@@ -41,7 +41,9 @@ class _ForgotPasswordState extends State<ForgotPassword> with RedirectToLogin {
           BlocConsumer<AuthBloc, AuthState>(
             listener: (context, state) async {
               if (state is PasswordResetEmailSent) {
-                await showRedirectToLoginDialog(context);
+                await OtpResetPasswordRoute(
+                  email: emailController.text.trim(),
+                ).push(context);
               } else if (state is AuthError) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(content: Text(state.message)),

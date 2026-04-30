@@ -1,5 +1,8 @@
+import 'package:clot/core/navigation/app_router.dart';
 import 'package:clot/core/ui/extensions/app_color_extension.dart';
+import 'package:clot/features/auth/presentation/pages/signin/signin.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class AppBackButton extends StatelessWidget {
   const AppBackButton({super.key});
@@ -10,7 +13,11 @@ class AppBackButton extends StatelessWidget {
       padding: const EdgeInsets.only(left: 16),
       child: GestureDetector(
         onTap: () {
-          Navigator.pop(context);
+          if (GoRouter.of(context).canPop()) {
+            context.pop();
+          } else {
+            SignInRoute().go(context);
+          }
         },
         child: Container(
           decoration: BoxDecoration(
