@@ -68,3 +68,16 @@ final class PasswordResetEmailSent extends AuthState {
   @override
   List<Object> get props => [message];
 }
+
+// Emitted after OTP is verified successfully.
+// Signals UI to show the new password fields.
+final class OtpVerified extends AuthState {}
+
+// Emitted after password is updated successfully.
+final class PasswordUpdated extends AuthState {
+  const PasswordUpdated({required this.message});
+  final String message;
+
+  @override
+  List<Object> get props => [message];
+}
