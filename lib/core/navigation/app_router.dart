@@ -1,12 +1,19 @@
+import 'package:clot/core/variables/app_svg.dart';
+import 'package:clot/core/variables/colors.dart';
 import 'package:clot/features/auth/presentation/pages/about_yourself/about_yourself.dart';
 import 'package:clot/features/auth/presentation/pages/create_account/create_account.dart';
 import 'package:clot/features/auth/presentation/pages/forgot_password/forgot_password.dart';
 import 'package:clot/features/auth/presentation/pages/forgot_password/otp_reset_password.dart';
 import 'package:clot/features/auth/presentation/pages/signin/signin.dart';
+import 'package:clot/features/home/presentation/pages/home_screen.dart';
+import 'package:clot/features/notification_page/presentation/pages/notification_screen.dart';
+import 'package:clot/features/order/presentation/pages/order_screen.dart';
+import 'package:clot/features/profile/presentation/pages/profile_screen.dart';
 import 'package:clot/features/splash_screen/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 // import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -15,15 +22,15 @@ part 'app_router.g.dart';
 final appRouter = GoRouter(
   routes: $appRoutes,
   initialLocation: SplashScreenRoute.path,
-  // redirect: (context, state) {
-  //   final session = Supabase.instance.client.auth.currentSession;
-  //   final bool loggedIn = session != null;
-  //
-  //   if (loggedIn && state.matchedLocation == SplashScreenRoute.path) {
-  //     return '/home';
-  //   }
-  //   return null;
-  // },
+  redirect: (context, state) {
+    final session = Supabase.instance.client.auth.currentSession;
+    final bool loggedIn = session != null;
+
+    if (loggedIn && state.matchedLocation == SplashScreenRoute.path) {
+      return '/home';
+    }
+    return null;
+  },
 );
 
 // entry point
@@ -122,18 +129,17 @@ class ApartmentViewRoute extends GoRouteData with $ApartmentViewRoute {
 }
 */
 
-/*
 //MAIN APP SHELL WITH BOTTOM NAV  (NESTED ROUTING)
 @TypedStatefulShellRoute<AppShellRouteData>(
   branches: [
     TypedStatefulShellBranch<HomeBranchData>(
       routes: [TypedGoRoute<HomeRoute>(path: '/home')],
     ),
-    TypedStatefulShellBranch<SavedBranchData>(
-      routes: [TypedGoRoute<SavedPageRoute>(path: '/saved')],
+    TypedStatefulShellBranch<NotificationBranchData>(
+      routes: [TypedGoRoute<NotificationPageRoute>(path: '/notification')],
     ),
-    TypedStatefulShellBranch<MessagesBranchData>(
-      routes: [TypedGoRoute<MessagesPageRoute>(path: '/messages')],
+    TypedStatefulShellBranch<OrderBranchData>(
+      routes: [TypedGoRoute<OrderPageRoute>(path: '/order')],
     ),
     TypedStatefulShellBranch<ProfileBranchData>(
       routes: [TypedGoRoute<ProfilePageRoute>(path: '/profile')],
@@ -153,46 +159,44 @@ class AppShellRouteData extends StatefulShellRouteData {
   }
 }
 
-
 class HomeBranchData extends StatefulShellBranchData {
   const HomeBranchData();
 }
 
-class SavedBranchData extends StatefulShellBranchData {
-  const SavedBranchData();
+class NotificationBranchData extends StatefulShellBranchData {
+  const NotificationBranchData();
 }
 
-class MessagesBranchData extends StatefulShellBranchData {
-  const MessagesBranchData();
+class OrderBranchData extends StatefulShellBranchData {
+  const OrderBranchData();
 }
 
 class ProfileBranchData extends StatefulShellBranchData {
   const ProfileBranchData();
 }
 
-
 class HomeRoute extends GoRouteData with $HomeRoute {
   @override
   Widget build(BuildContext context, GoRouterState state) => const HomeScreen();
 }
 
-class SavedPageRoute extends GoRouteData with $SavedPageRoute {
-  @override
-  Widget build(BuildContext context, GoRouterState state) => const SavedPage();
-}
-
-class MessagesPageRoute extends GoRouteData with $MessagesPageRoute {
+class NotificationPageRoute extends GoRouteData with $NotificationPageRoute {
   @override
   Widget build(BuildContext context, GoRouterState state) =>
-      const MessagesPage();
+      const NotificationScreen();
+}
+
+class OrderPageRoute extends GoRouteData with $OrderPageRoute {
+  @override
+  Widget build(BuildContext context, GoRouterState state) =>
+      const OrderScreen();
 }
 
 class ProfilePageRoute extends GoRouteData with $ProfilePageRoute {
   @override
   Widget build(BuildContext context, GoRouterState state) =>
-      const ProfilePage();
+      const ProfileScreen();
 }
-
 
 class ScaffoldWithBottomNavBar extends StatelessWidget {
   const ScaffoldWithBottomNavBar({
@@ -211,19 +215,17 @@ class ScaffoldWithBottomNavBar extends StatelessWidget {
         onTap: (index) => navigationShell.goBranch(index),
         type: BottomNavigationBarType.fixed,
         selectedItemColor: AppColors.kPrimary,
-        unselectedItemColor: AppColors.kGrey40,
+        unselectedItemColor: AppColors.kBgLight2,
         selectedIconTheme: const IconThemeData(color: AppColors.kPrimary),
-        unselectedIconTheme: const IconThemeData(color: AppColors.kGrey40),
+        unselectedIconTheme: const IconThemeData(color: AppColors.kBgLight2),
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
         items: [
           BottomNavigationBarItem(
-            icon: SvgPicture.asset(AppSvg.kExplore),
-            label: 'Explore',
-          ),
-          BottomNavigationBarItem(
-            icon: SvgPicture.asset(AppSvg.kSaved),
-            label: 'Saved',
+            icon: SvgPicture.asset(AppSvg.kHome),
+            label: 'Home',
             activeIcon: SvgPicture.asset(
-              AppSvg.kSaved,
+              AppSvg.kHome,
               colorFilter: const ColorFilter.mode(
                 AppColors.kPrimary,
                 BlendMode.srcIn,
@@ -231,10 +233,21 @@ class ScaffoldWithBottomNavBar extends StatelessWidget {
             ),
           ),
           BottomNavigationBarItem(
-            icon: SvgPicture.asset(AppSvg.kMessages),
-            label: 'Messages',
+            icon: SvgPicture.asset(AppSvg.kNotificationBing),
+            label: 'Notifications',
             activeIcon: SvgPicture.asset(
-              AppSvg.kMessages,
+              AppSvg.kNotificationBing,
+              colorFilter: const ColorFilter.mode(
+                AppColors.kPrimary,
+                BlendMode.srcIn,
+              ),
+            ),
+          ),
+          BottomNavigationBarItem(
+            icon: SvgPicture.asset(AppSvg.kReceipt),
+            label: 'Receipts',
+            activeIcon: SvgPicture.asset(
+              AppSvg.kReceipt,
               colorFilter: const ColorFilter.mode(
                 AppColors.kPrimary,
                 BlendMode.srcIn,
@@ -257,5 +270,3 @@ class ScaffoldWithBottomNavBar extends StatelessWidget {
     );
   }
 }
-
- */
