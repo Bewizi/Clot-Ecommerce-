@@ -1,3 +1,5 @@
+import 'package:clot/features/auth/domain/auth_domain.dart';
+
 abstract class AuthRepository {
   // Single method — signs up the user and inserts ALL profile fields at once
   Future<void> createAccount({
@@ -26,4 +28,6 @@ abstract class AuthRepository {
   });
 
   Future<void> updatePassword({required String newPassword});
+
+  Future<AuthDomain> getUserData({required String userId});
 }
