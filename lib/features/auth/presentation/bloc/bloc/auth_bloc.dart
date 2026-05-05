@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:clot/features/auth/domain/auth_domain.dart';
 import 'package:clot/features/auth/domain/auth_repository.dart';
 import 'package:equatable/equatable.dart';
 
@@ -16,6 +17,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<ResetPassword>(_resetPassword);
     on<VerifyOtp>(_verifyOtp);
     on<UpdatePassword>(_updatePassword);
+    on<GetUserData>(_getUserData);
   }
 
   // no Supabase call — just stores the form data in state
@@ -125,6 +127,19 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     try {
       await authRepository.updatePassword(newPassword: event.newPassword);
       emit(const PasswordUpdated(message: 'Password updated successfully'));
+    } on Exception catch (e) {
+      emit(AuthError(e.toString()));
+    }
+  }
+
+  Future<void> _getUserData(
+    GetUserData event,
+    Emitter<AuthState> emit,
+  ) async {
+    emit(AuthLoading());
+    try {
+      final authDomain = await authRepository.getUserData(userId: event.userId);
+      emit(GetUserInfo(authDomain: authDomain));
     } on Exception catch (e) {
       emit(AuthError(e.toString()));
     }

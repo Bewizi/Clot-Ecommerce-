@@ -1,4 +1,5 @@
 import 'package:clot/core/data/supabase_api_keys.dart';
+import 'package:clot/features/auth/domain/auth_domain.dart';
 import 'package:clot/features/auth/domain/auth_repository.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -113,6 +114,28 @@ class AuthData implements AuthRepository {
       );
     } catch (e) {
       throw Exception('Failed to update password: $e');
+    }
+  }
+
+  @override
+  Future<AuthDomain> getUserData({required String userId}) async {
+    try {
+      final response = await supaBase
+          .schema('clot')
+          .from('profile')
+          .select()
+          .eq('profile_id', userId)
+          .maybeSingle();
+
+      if (response == null) {
+        throw Exception(
+          'Failed to fetch user data: no profile row found for this user',
+        );
+      }
+
+      return AuthDomain.fromMap(response as Map<String, dynamic>);
+    } catch (e) {
+      throw Exception('Failed to fetch user data: $e');
     }
   }
 }

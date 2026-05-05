@@ -81,3 +81,12 @@ final class PasswordUpdated extends AuthState {
   @override
   List<Object> get props => [message];
 }
+
+final class GetUserInfo extends AuthState {
+  const GetUserInfo({required this.authDomain});
+
+  final AuthDomain authDomain;
+
+  @override
+  List<Object> get props => [authDomain];
+}
