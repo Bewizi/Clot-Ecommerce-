@@ -7,8 +7,10 @@ import 'package:clot/core/ui/extensions/app_spacing_extension.dart';
 import 'package:clot/core/ui/extensions/app_theme_extension.dart';
 import 'package:clot/core/variables/colors.dart';
 import 'package:clot/features/auth/presentation/bloc/bloc/auth_bloc.dart';
+import 'package:clot/features/home/presentation/pages/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class AboutYourself extends StatefulWidget {
   const AboutYourself({super.key});
@@ -41,9 +43,7 @@ class _AboutYourselfState extends State<AboutYourself> {
 
           // Single insert succeeded — navigate to Home
           if (state is AuthSuccess) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text("User registered successfully!")),
-            );
+            context.go(HomeScreen.routeName);
           }
         },
         builder: (context, state) {
