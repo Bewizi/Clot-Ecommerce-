@@ -6,6 +6,7 @@ import 'package:clot/core/variables/app_radius.dart';
 import 'package:clot/core/variables/app_svg.dart';
 import 'package:clot/core/variables/colors.dart';
 import 'package:clot/features/auth/presentation/bloc/bloc/auth_bloc.dart';
+import 'package:clot/features/home/presentation/widgets/homedelegate_headers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -35,19 +36,36 @@ class _HomeScreenState extends State<HomeScreen> {
     return AppScaffold(
       body: CustomScrollView(
         slivers: [
-          SliverToBoxAdapter(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const CircleAvatar(
-                  radius: 20,
-                  backgroundColor: AppColors.kPrimary,
-                ),
+          SliverPersistentHeader(
+            pinned: true,
+            delegate: HomeHeaderDelegate(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const CircleAvatar(
+                    radius: 20,
+                    backgroundColor: AppColors.kPrimary,
+                  ),
 
-                _buildGenderSelector(),
+                  _buildGenderSelector(),
 
-                _buildCart(),
-              ],
+                  _buildCart(),
+                ],
+              ),
+            ),
+          ),
+
+          const SliverToBoxAdapter(
+            child: Padding(
+              padding: EdgeInsets.all(16),
+              child: Column(
+                children: [
+                  // Your Search Bar and Categories go here
+                  AppText('Products and Categories go here...'),
+                  // Add enough height to test the scroll
+                  SizedBox(height: 1000),
+                ],
+              ),
             ),
           ),
         ],
