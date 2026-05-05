@@ -1,6 +1,5 @@
 import 'package:clot/core/navigation/app_router.dart';
 import 'package:clot/core/ui/extensions/app_color_extension.dart';
-import 'package:clot/features/auth/presentation/pages/signin/signin.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
