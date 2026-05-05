@@ -8,4 +8,6 @@ class AppSvg {
   static const String kProfile = 'assets/svgs/profile.svg';
   static const String kNotificationBing = 'assets/svgs/notificationbing.svg';
   static const String kHome = 'assets/svgs/home.svg';
+
+  static const String kBag = 'assets/svgs/bag2.svg';
 }
