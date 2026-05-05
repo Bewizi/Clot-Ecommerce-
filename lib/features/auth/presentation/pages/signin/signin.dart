@@ -9,6 +9,7 @@ import 'package:clot/core/ui/extensions/app_theme_extension.dart';
 import 'package:clot/core/variables/app_svg.dart';
 import 'package:clot/features/auth/presentation/bloc/bloc/auth_bloc.dart';
 import 'package:clot/features/auth/presentation/pages/forgot_password/forgot_password.dart';
+import 'package:clot/features/home/presentation/pages/home_screen.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -59,9 +60,7 @@ class _SignInState extends State<SignIn> {
               }
 
               if (state is AuthSuccess) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text("User signed in successfully!")),
-                );
+                context.go(HomeScreen.routeName);
               }
             },
             builder: (context, state) {
