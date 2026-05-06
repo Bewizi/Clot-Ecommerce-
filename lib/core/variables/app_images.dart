@@ -2,4 +2,10 @@ class AppImages {
   static const String kLogo = 'assets/images/logo.png';
 
   static const String kEMailBox = 'assets/images/email_box.png';
+
+  static const String kAccessories = 'assets/images/accessories.png';
+  static const String kBags = 'assets/images/bags.png';
+  static const String kHoodies = 'assets/images/hoodies.png';
+  static const String kShoes = 'assets/images/shoes.png';
+  static const String kShorts = 'assets/images/shorts.png';
 }
