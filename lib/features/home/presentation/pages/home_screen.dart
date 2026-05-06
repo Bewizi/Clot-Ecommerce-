@@ -3,11 +3,13 @@ import 'package:clot/core/theme/app_text_theme.dart';
 import 'package:clot/core/ui/components/app_text.dart';
 import 'package:clot/core/ui/components/layouts/app_scaffold.dart';
 import 'package:clot/core/ui/extensions/app_spacing_extension.dart';
+import 'package:clot/core/ui/extensions/string_extension.dart';
 import 'package:clot/core/variables/app_images.dart';
 import 'package:clot/core/variables/app_radius.dart';
 import 'package:clot/core/variables/app_svg.dart';
 import 'package:clot/core/variables/colors.dart';
 import 'package:clot/features/auth/presentation/bloc/bloc/auth_bloc.dart';
+import 'package:clot/features/home/presentation/bloc/categories_bloc.dart';
 import 'package:clot/features/home/presentation/widgets/homedelegate_headers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -31,6 +33,8 @@ class _HomeScreenState extends State<HomeScreen> {
     if (user != null) {
       context.read<AuthBloc>().add(GetUserData(userId: user.id));
     }
+
+    context.read<CategoriesBloc>().add(const GetCategories());
   }
 
   List<Map<String, dynamic>> categories = [
@@ -105,32 +109,62 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   // Your Search Bar and Categories go here
                   16.verticalSpacing,
-                  SizedBox(
-                    height: MediaQuery.sizeOf(context).height * 0.15,
-                    child: ListView.separated(
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) {
-                        final category = categories[index];
-                        return Column(
-                          children: [
-                            Image.asset(
-                              category['image'] as String,
-                              width: 80,
-                              height: 80,
-                              fit: BoxFit.cover,
-                            ),
-                            8.verticalSpacing,
-                            AppText(
-                              category['text'] as String,
-                              style: appTextTheme.bodySmall,
-                            ),
-                          ],
+                  BlocBuilder<CategoriesBloc, CategoriesState>(
+                    builder: (context, state) {
+                      if (state is CategoriesLoading) {
+                        return SizedBox(
+                          height: MediaQuery.sizeOf(context).height * 0.15,
+                          child: const Center(
+                            child: CircularProgressIndicator(),
+                          ),
                         );
-                      },
-                      separatorBuilder: (context, index) =>
-                          16.horizontalSpacing,
-                      itemCount: categories.length,
-                    ),
+                      }
+
+                      if (state is CategoriesError) {
+                        return SizedBox(
+                          height: 100,
+                          child: Center(child: AppText(state.message)),
+                        );
+                      }
+
+                      if (state is CategoriesLoaded) {
+                        return SizedBox(
+                          height: MediaQuery.sizeOf(context).height * 0.15,
+                          child: ListView.separated(
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder: (context, index) {
+                              final category = state.categories[index];
+                              return Column(
+                                children: [
+                                  if (category.image.isNotEmpty)
+                                    Image.network(
+                                      category.image,
+                                      width: 80,
+                                      height: 80,
+                                      fit: BoxFit.cover,
+                                    )
+                                  else
+                                    Container(
+                                      width: 80,
+                                      height: 80,
+                                      color: AppColors.kBgLight2,
+                                    ),
+                                  8.verticalSpacing,
+                                  AppText(
+                                    category.name.toTitleCase(),
+                                    style: appTextTheme.bodySmall,
+                                  ),
+                                ],
+                              );
+                            },
+                            separatorBuilder: (context, index) =>
+                                16.horizontalSpacing,
+                            itemCount: state.categories.length,
+                          ),
+                        );
+                      }
+                      return const SizedBox.shrink();
+                    },
                   ),
 
                   // Add enough height to test the scroll
