@@ -2,6 +2,8 @@ import 'package:clot/core/data/supabase_api_keys.dart';
 import 'package:clot/core/theme/app_text_theme.dart';
 import 'package:clot/core/ui/components/app_text.dart';
 import 'package:clot/core/ui/components/layouts/app_scaffold.dart';
+import 'package:clot/core/ui/extensions/app_spacing_extension.dart';
+import 'package:clot/core/variables/app_images.dart';
 import 'package:clot/core/variables/app_radius.dart';
 import 'package:clot/core/variables/app_svg.dart';
 import 'package:clot/core/variables/colors.dart';
@@ -31,6 +33,29 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  List<Map<String, dynamic>> categories = [
+    {
+      'image': AppImages.kHoodies,
+      'text': 'Hoodies',
+    },
+    {
+      'image': AppImages.kShorts,
+      'text': 'Shorts',
+    },
+    {
+      'image': AppImages.kShoes,
+      'text': 'Shoes',
+    },
+    {
+      'image': AppImages.kBags,
+      'text': 'Bag',
+    },
+    {
+      'image': AppImages.kAccessories,
+      'text': 'Accessories',
+    },
+  ];
+
   @override
   Widget build(BuildContext context) {
     return AppScaffold(
@@ -55,15 +80,61 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
 
-          const SliverToBoxAdapter(
+          SliverToBoxAdapter(
             child: Padding(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.only(top: 24),
               child: Column(
                 children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      AppText(
+                        'Categories',
+                        style: appAltTextTheme.bodyLarge?.copyWith(
+                          fontWeight: FontWeight.w800,
+                        ),
+                      ),
+                      AppText(
+                        'See All',
+                        style: appTextTheme.bodyLarge!.copyWith(
+                          fontWeight: FontWeight.w400,
+                          color: AppColors.kBlack100,
+                        ),
+                      ),
+                    ],
+                  ),
                   // Your Search Bar and Categories go here
-                  AppText('Products and Categories go here...'),
+                  16.verticalSpacing,
+                  SizedBox(
+                    height: MediaQuery.sizeOf(context).height * 0.15,
+                    child: ListView.separated(
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (context, index) {
+                        final category = categories[index];
+                        return Column(
+                          children: [
+                            Image.asset(
+                              category['image'] as String,
+                              width: 80,
+                              height: 80,
+                              fit: BoxFit.cover,
+                            ),
+                            8.verticalSpacing,
+                            AppText(
+                              category['text'] as String,
+                              style: appTextTheme.bodySmall,
+                            ),
+                          ],
+                        );
+                      },
+                      separatorBuilder: (context, index) =>
+                          16.horizontalSpacing,
+                      itemCount: categories.length,
+                    ),
+                  ),
+
                   // Add enough height to test the scroll
-                  SizedBox(height: 1000),
+                  const SizedBox(height: 1000),
                 ],
               ),
             ),
