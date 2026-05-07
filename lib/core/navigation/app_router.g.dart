@@ -13,6 +13,8 @@ List<RouteBase> get $appRoutes => [
   $forgotPasswordRoute,
   $otpResetPasswordRoute,
   $aboutYourselfRoute,
+  $seeAllCategoriesRoute,
+  $categoryProductsRoute,
   $appShellRouteData,
 ];
 
@@ -157,6 +159,65 @@ mixin $AboutYourselfRoute on GoRouteData {
 
   @override
   String get location => GoRouteData.$location('/about-yourself');
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $seeAllCategoriesRoute => GoRouteData.$route(
+  path: '/see-all-categories',
+  factory: $SeeAllCategoriesRoute._fromState,
+);
+
+mixin $SeeAllCategoriesRoute on GoRouteData {
+  static SeeAllCategoriesRoute _fromState(GoRouterState state) =>
+      SeeAllCategoriesRoute();
+
+  @override
+  String get location => GoRouteData.$location('/see-all-categories');
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $categoryProductsRoute => GoRouteData.$route(
+  path: '/category-products/:categoryId/:categoryName',
+  factory: $CategoryProductsRoute._fromState,
+);
+
+mixin $CategoryProductsRoute on GoRouteData {
+  static CategoryProductsRoute _fromState(GoRouterState state) =>
+      CategoryProductsRoute(
+        categoryId: state.pathParameters['categoryId']!,
+        categoryName: state.pathParameters['categoryName']!,
+      );
+
+  CategoryProductsRoute get _self => this as CategoryProductsRoute;
+
+  @override
+  String get location => GoRouteData.$location(
+    '/category-products/${Uri.encodeComponent(_self.categoryId)}/${Uri.encodeComponent(_self.categoryName)}',
+  );
 
   @override
   void go(BuildContext context) => context.go(location);

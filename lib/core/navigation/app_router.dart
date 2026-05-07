@@ -6,8 +6,10 @@ import 'package:clot/features/auth/presentation/pages/forgot_password/forgot_pas
 import 'package:clot/features/auth/presentation/pages/forgot_password/otp_reset_password.dart';
 import 'package:clot/features/auth/presentation/pages/signin/signin.dart';
 import 'package:clot/features/home/presentation/pages/home_screen.dart';
+import 'package:clot/features/home/presentation/pages/see_all_categories.dart';
 import 'package:clot/features/notification_page/presentation/pages/notification_screen.dart';
 import 'package:clot/features/order/presentation/pages/order_screen.dart';
+import 'package:clot/features/products/presentation/pages/category_products_screen.dart';
 import 'package:clot/features/profile/presentation/pages/profile_screen.dart';
 import 'package:clot/features/splash_screen/splash_screen.dart';
 import 'package:flutter/material.dart';
@@ -95,6 +97,37 @@ class AboutYourselfRoute extends GoRouteData with $AboutYourselfRoute {
   @override
   Widget build(BuildContext context, GoRouterState state) =>
       const AboutYourself();
+}
+
+// see all categories
+@TypedGoRoute<SeeAllCategoriesRoute>(path: SeeAllCategoriesRoute.path)
+class SeeAllCategoriesRoute extends GoRouteData with $SeeAllCategoriesRoute {
+  static const path = '/see-all-categories';
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) =>
+      const SeeAllCategories();
+}
+
+// category products
+@TypedGoRoute<CategoryProductsRoute>(
+  path: '/category-products/:categoryId/:categoryName',
+)
+class CategoryProductsRoute extends GoRouteData with $CategoryProductsRoute {
+  const CategoryProductsRoute({
+    required this.categoryId,
+    required this.categoryName,
+  });
+
+  final String categoryId;
+  final String categoryName;
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) =>
+      CategoryProductsScreen(
+        categoryId: categoryId,
+        categoryName: categoryName,
+      );
 }
 
 /*
@@ -208,6 +241,11 @@ class ScaffoldWithBottomNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final unselectedColor = isDark
+        ? AppColors.kBgLight2
+        : AppColors.kBlack100.withValues(alpha: 0.5);
+
     return Scaffold(
       body: navigationShell,
       bottomNavigationBar: BottomNavigationBar(
@@ -215,14 +253,14 @@ class ScaffoldWithBottomNavBar extends StatelessWidget {
         onTap: (index) => navigationShell.goBranch(index),
         type: BottomNavigationBarType.fixed,
         selectedItemColor: AppColors.kPrimary,
-        unselectedItemColor: AppColors.kBgLight2,
-        selectedIconTheme: const IconThemeData(color: AppColors.kPrimary),
-        unselectedIconTheme: const IconThemeData(color: AppColors.kBgLight2),
         showSelectedLabels: false,
         showUnselectedLabels: false,
         items: [
           BottomNavigationBarItem(
-            icon: SvgPicture.asset(AppSvg.kHome),
+            icon: SvgPicture.asset(
+              AppSvg.kHome,
+              colorFilter: ColorFilter.mode(unselectedColor, BlendMode.srcIn),
+            ),
             label: 'Home',
             activeIcon: SvgPicture.asset(
               AppSvg.kHome,
@@ -233,7 +271,10 @@ class ScaffoldWithBottomNavBar extends StatelessWidget {
             ),
           ),
           BottomNavigationBarItem(
-            icon: SvgPicture.asset(AppSvg.kNotificationBing),
+            icon: SvgPicture.asset(
+              AppSvg.kNotificationBing,
+              colorFilter: ColorFilter.mode(unselectedColor, BlendMode.srcIn),
+            ),
             label: 'Notifications',
             activeIcon: SvgPicture.asset(
               AppSvg.kNotificationBing,
@@ -244,7 +285,10 @@ class ScaffoldWithBottomNavBar extends StatelessWidget {
             ),
           ),
           BottomNavigationBarItem(
-            icon: SvgPicture.asset(AppSvg.kReceipt),
+            icon: SvgPicture.asset(
+              AppSvg.kReceipt,
+              colorFilter: ColorFilter.mode(unselectedColor, BlendMode.srcIn),
+            ),
             label: 'Receipts',
             activeIcon: SvgPicture.asset(
               AppSvg.kReceipt,
@@ -255,7 +299,10 @@ class ScaffoldWithBottomNavBar extends StatelessWidget {
             ),
           ),
           BottomNavigationBarItem(
-            icon: SvgPicture.asset(AppSvg.kProfile),
+            icon: SvgPicture.asset(
+              AppSvg.kProfile,
+              colorFilter: ColorFilter.mode(unselectedColor, BlendMode.srcIn),
+            ),
             label: 'Profile',
             activeIcon: SvgPicture.asset(
               AppSvg.kProfile,
