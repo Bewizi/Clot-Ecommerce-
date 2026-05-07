@@ -41,163 +41,169 @@ class _SignInState extends State<SignIn> {
   @override
   Widget build(BuildContext context) {
     return AppScaffold(
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          AppText(
-            'Sign in',
-            style: context.textTheme.headlineLarge?.copyWith(
-              color: Theme.of(context).colorScheme.appText,
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            AppText(
+              'Sign in',
+              style: context.textTheme.headlineLarge?.copyWith(
+                color: Theme.of(context).colorScheme.appText,
+              ),
             ),
-          ),
-          32.verticalSpacing,
-          BlocConsumer<AuthBloc, AuthState>(
-            listener: (context, state) {
-              if (state is AuthError) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text(state.message)),
-                );
-              }
+            32.verticalSpacing,
+            BlocConsumer<AuthBloc, AuthState>(
+              listener: (context, state) {
+                if (state is AuthError) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text(state.message)),
+                  );
+                }
 
-              if (state is AuthSuccess) {
-                context.go(HomeScreen.routeName);
-              }
-            },
-            builder: (context, state) {
-              return Form(
-                key: formKey,
-                child: Column(
-                  children: [
-                    AppTextField(
-                      hintText: 'Email Address',
-                      controller: emailController,
-                      prefixIcon: const Icon(Icons.email_outlined),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter your email address';
-                        }
-                        if (!value.contains('@')) {
-                          return 'Please enter a valid email address';
-                        }
-                        return null;
-                      },
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        AppTextField(
-                          hintText: 'Password',
-                          controller: passwordController,
-                          prefixIcon: const Icon(Icons.lock_outline_rounded),
-                          suffixIcon: const Icon(Icons.visibility_outlined),
-                          obscureText: true,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter your password';
-                            }
-                            if (value.length < 6) {
-                              return 'Password must be at least 6 characters';
-                            }
-                            return null;
-                          },
-                        ),
-                        16.verticalSpacing,
-                        Align(
-                          alignment: Alignment.bottomRight,
-                          child: AppRichText(
-                            textAlign: TextAlign.end,
-                            spans: [
-                              TextSpan(
-                                text: 'Forgot password?',
-                                style: context.textTheme.bodySmall!.copyWith(
-                                  color: Theme.of(context).colorScheme.appText,
-                                ),
-                              ),
-                              TextSpan(
-                                recognizer: TapGestureRecognizer()
-                                  ..onTap = () =>
-                                      context.push(ForgotPassword.routeName),
-                                text: ' Reset',
-                                style: context.textTheme.bodySmall!.copyWith(
-                                  color: Theme.of(context).colorScheme.appText,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-
-                    32.verticalSpacing,
-                    PrimaryButton(
-                      pressed: state is AuthLoading
-                          ? null
-                          : () {
-                              if (formKey.currentState!.validate()) {
-                                context.read<AuthBloc>().add(
-                                  SignInUser(
-                                    email: emailController.text.trim(),
-                                    password: passwordController.text.trim(),
-                                  ),
-                                );
+                if (state is AuthSuccess) {
+                  context.go(HomeScreen.routeName);
+                }
+              },
+              builder: (context, state) {
+                return Form(
+                  key: formKey,
+                  child: Column(
+                    children: [
+                      AppTextField(
+                        hintText: 'Email Address',
+                        controller: emailController,
+                        prefixIcon: const Icon(Icons.email_outlined),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter your email address';
+                          }
+                          if (!value.contains('@')) {
+                            return 'Please enter a valid email address';
+                          }
+                          return null;
+                        },
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          AppTextField(
+                            hintText: 'Password',
+                            controller: passwordController,
+                            prefixIcon: const Icon(Icons.lock_outline_rounded),
+                            suffixIcon: const Icon(Icons.visibility_outlined),
+                            obscureText: true,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter your password';
                               }
+                              if (value.length < 6) {
+                                return 'Password must be at least 6 characters';
+                              }
+                              return null;
                             },
-                      state is AuthLoading ? 'Signing in...' : 'Sign in',
-                      loading: state is AuthLoading,
-                    ),
-                  ],
-                ),
-              );
-            },
-          ),
-          16.verticalSpacing,
-          Align(
-            alignment: Alignment.bottomLeft,
-            child: AppRichText(
-              spans: [
-                TextSpan(
-                  text: 'Dont have an Account ?',
-                  style: context.textTheme.bodySmall!.copyWith(
-                    color: Theme.of(context).colorScheme.appText,
+                          ),
+                          16.verticalSpacing,
+                          Align(
+                            alignment: Alignment.bottomRight,
+                            child: AppRichText(
+                              textAlign: TextAlign.end,
+                              spans: [
+                                TextSpan(
+                                  text: 'Forgot password?',
+                                  style: context.textTheme.bodySmall!.copyWith(
+                                    color: Theme.of(
+                                      context,
+                                    ).colorScheme.appText,
+                                  ),
+                                ),
+                                TextSpan(
+                                  recognizer: TapGestureRecognizer()
+                                    ..onTap = () =>
+                                        context.push(ForgotPassword.routeName),
+                                  text: ' Reset',
+                                  style: context.textTheme.bodySmall!.copyWith(
+                                    color: Theme.of(
+                                      context,
+                                    ).colorScheme.appText,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+
+                      32.verticalSpacing,
+                      PrimaryButton(
+                        pressed: state is AuthLoading
+                            ? null
+                            : () {
+                                if (formKey.currentState!.validate()) {
+                                  context.read<AuthBloc>().add(
+                                    SignInUser(
+                                      email: emailController.text.trim(),
+                                      password: passwordController.text.trim(),
+                                    ),
+                                  );
+                                }
+                              },
+                        state is AuthLoading ? 'Signing in...' : 'Sign in',
+                        loading: state is AuthLoading,
+                      ),
+                    ],
                   ),
-                ),
-                TextSpan(
-                  recognizer: TapGestureRecognizer()
-                    ..onTap = () => CreateAccountRoute().go(context),
-                  text: ' Create One',
-                  style: context.textTheme.bodySmall!.copyWith(
-                    color: Theme.of(context).colorScheme.appText,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
+                );
+              },
             ),
-          ),
+            16.verticalSpacing,
+            Align(
+              alignment: Alignment.bottomLeft,
+              child: AppRichText(
+                spans: [
+                  TextSpan(
+                    text: 'Dont have an Account ?',
+                    style: context.textTheme.bodySmall!.copyWith(
+                      color: Theme.of(context).colorScheme.appText,
+                    ),
+                  ),
+                  TextSpan(
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () => CreateAccountRoute().go(context),
+                    text: ' Create One',
+                    style: context.textTheme.bodySmall!.copyWith(
+                      color: Theme.of(context).colorScheme.appText,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+            ),
 
-          64.verticalSpacing,
+            64.verticalSpacing,
 
-          buildSignInOptions(
-            context,
-            () {},
-            'Continue With Apple',
-            AppSvg.kAppleIcon,
-          ),
-          16.verticalSpacing,
-          buildSignInOptions(
-            context,
-            () {},
-            'Continue With Google',
-            AppSvg.kGoogleIcon,
-          ),
-          16.verticalSpacing,
-          buildSignInOptions(
-            context,
-            () {},
-            'Continue With Facebook',
-            AppSvg.kFaceBookIcon,
-          ),
-        ],
+            buildSignInOptions(
+              context,
+              () {},
+              'Continue With Apple',
+              AppSvg.kAppleIcon,
+            ),
+            16.verticalSpacing,
+            buildSignInOptions(
+              context,
+              () {},
+              'Continue With Google',
+              AppSvg.kGoogleIcon,
+            ),
+            16.verticalSpacing,
+            buildSignInOptions(
+              context,
+              () {},
+              'Continue With Facebook',
+              AppSvg.kFaceBookIcon,
+            ),
+          ],
+        ),
       ),
     );
   }

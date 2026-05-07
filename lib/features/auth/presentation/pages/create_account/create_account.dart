@@ -39,133 +39,135 @@ class _CreateAccountState extends State<CreateAccount> {
   @override
   Widget build(BuildContext context) {
     return AppScaffold(
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          AppText(
-            'Create Account',
-            style: context.textTheme.headlineLarge,
-          ),
-          32.verticalSpacing,
-          BlocConsumer<AuthBloc, AuthState>(
-            listener: (context, state) {
-              if (state is AuthError) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text(state.message)),
-                );
-              }
-
-              // The data is just stored in the bloc state.
-              // Navigate to AboutYourself to collect gender and age.
-              if (state is AccountDetailsStored) {
-                AboutYourselfRoute().go(context);
-              }
-            },
-            builder: (context, state) {
-              return Form(
-                key: formKey,
-                child: Column(
-                  children: [
-                    AppTextField(
-                      hintText: 'Firstname',
-                      controller: firstNameController,
-                      prefixIcon: const Icon(Icons.person),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter your firstname';
-                        }
-                        return null;
-                      },
-                    ),
-                    AppTextField(
-                      hintText: 'Lastname',
-                      controller: lastNameController,
-                      prefixIcon: const Icon(Icons.person),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter your lastname';
-                        }
-                        return null;
-                      },
-                    ),
-                    AppTextField(
-                      hintText: 'Email Address',
-                      controller: emailController,
-                      prefixIcon: const Icon(Icons.email_outlined),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter your email address';
-                        }
-                        if (!value.contains('@')) {
-                          return 'Please enter a valid email address';
-                        }
-                        return null;
-                      },
-                    ),
-                    AppTextField(
-                      hintText: 'Password',
-                      controller: passwordController,
-                      prefixIcon: const Icon(Icons.lock_outline_rounded),
-                      suffixIcon: const Icon(Icons.visibility_outlined),
-                      obscureText: true,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter your password';
-                        }
-                        if (value.length < 6) {
-                          return 'Password must be at least 6 characters';
-                        }
-                        return null;
-                      },
-                    ),
-                    32.verticalSpacing,
-                    PrimaryButton(
-                      // No loading state here — StoreAccountDetails is
-                      // synchronous (no network call), so the button
-                      // never needs to show a spinner on this screen.
-                      pressed: () {
-                        if (formKey.currentState!.validate()) {
-                          context.read<AuthBloc>().add(
-                            StoreAccountDetails(
-                              firstName: firstNameController.text.trim(),
-                              lastName: lastNameController.text.trim(),
-                              email: emailController.text.trim(),
-                              password: passwordController.text.trim(),
-                            ),
-                          );
-                        }
-                      },
-                      'Continue',
-                    ),
-                  ],
-                ),
-              );
-            },
-          ),
-          16.verticalSpacing,
-          Align(
-            alignment: Alignment.bottomLeft,
-            child: AppRichText(
-              spans: [
-                TextSpan(
-                  text: 'Have an Account ?',
-                  style: context.textTheme.bodySmall!.copyWith(
-                    color: Theme.of(context).colorScheme.appText,
-                  ),
-                ),
-                TextSpan(
-                  recognizer: TapGestureRecognizer()
-                    ..onTap = () => SignInRoute().go(context),
-                  text: ' Sign In',
-                  style: context.textTheme.bodySmall!.copyWith(
-                    color: Theme.of(context).colorScheme.appText,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            AppText(
+              'Create Account',
+              style: context.textTheme.headlineLarge,
             ),
-          ),
-        ],
+            32.verticalSpacing,
+            BlocConsumer<AuthBloc, AuthState>(
+              listener: (context, state) {
+                if (state is AuthError) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text(state.message)),
+                  );
+                }
+
+                // The data is just stored in the bloc state.
+                // Navigate to AboutYourself to collect gender and age.
+                if (state is AccountDetailsStored) {
+                  AboutYourselfRoute().go(context);
+                }
+              },
+              builder: (context, state) {
+                return Form(
+                  key: formKey,
+                  child: Column(
+                    children: [
+                      AppTextField(
+                        hintText: 'Firstname',
+                        controller: firstNameController,
+                        prefixIcon: const Icon(Icons.person),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter your firstname';
+                          }
+                          return null;
+                        },
+                      ),
+                      AppTextField(
+                        hintText: 'Lastname',
+                        controller: lastNameController,
+                        prefixIcon: const Icon(Icons.person),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter your lastname';
+                          }
+                          return null;
+                        },
+                      ),
+                      AppTextField(
+                        hintText: 'Email Address',
+                        controller: emailController,
+                        prefixIcon: const Icon(Icons.email_outlined),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter your email address';
+                          }
+                          if (!value.contains('@')) {
+                            return 'Please enter a valid email address';
+                          }
+                          return null;
+                        },
+                      ),
+                      AppTextField(
+                        hintText: 'Password',
+                        controller: passwordController,
+                        prefixIcon: const Icon(Icons.lock_outline_rounded),
+                        suffixIcon: const Icon(Icons.visibility_outlined),
+                        obscureText: true,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter your password';
+                          }
+                          if (value.length < 6) {
+                            return 'Password must be at least 6 characters';
+                          }
+                          return null;
+                        },
+                      ),
+                      32.verticalSpacing,
+                      PrimaryButton(
+                        // No loading state here — StoreAccountDetails is
+                        // synchronous (no network call), so the button
+                        // never needs to show a spinner on this screen.
+                        pressed: () {
+                          if (formKey.currentState!.validate()) {
+                            context.read<AuthBloc>().add(
+                              StoreAccountDetails(
+                                firstName: firstNameController.text.trim(),
+                                lastName: lastNameController.text.trim(),
+                                email: emailController.text.trim(),
+                                password: passwordController.text.trim(),
+                              ),
+                            );
+                          }
+                        },
+                        'Continue',
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
+            16.verticalSpacing,
+            Align(
+              alignment: Alignment.bottomLeft,
+              child: AppRichText(
+                spans: [
+                  TextSpan(
+                    text: 'Have an Account ?',
+                    style: context.textTheme.bodySmall!.copyWith(
+                      color: Theme.of(context).colorScheme.appText,
+                    ),
+                  ),
+                  TextSpan(
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () => SignInRoute().go(context),
+                    text: ' Sign In',
+                    style: context.textTheme.bodySmall!.copyWith(
+                      color: Theme.of(context).colorScheme.appText,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
