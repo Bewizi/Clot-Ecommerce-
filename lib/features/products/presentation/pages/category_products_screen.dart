@@ -61,7 +61,7 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
               ),
             ),
           ),
-          24.verticalSpacing,
+          16.verticalSpacing,
           BlocBuilder<ProductsBloc, ProductsState>(
             builder: (context, state) {
               if (state is ProductsLoading) {
@@ -79,7 +79,6 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
 
                 return Expanded(
                   child: GridView.builder(
-                    padding: const EdgeInsets.only(top: 16),
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,
@@ -123,7 +122,6 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
                                   AppText(
                                     product.title,
                                     style: appTextTheme.bodySmall?.copyWith(
-                                      fontWeight: FontWeight.w600,
                                       color: Theme.of(
                                         context,
                                       ).colorScheme.appText,
@@ -135,7 +133,9 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
                                   AppText(
                                     '\$${product.price.toStringAsFixed(2)}',
                                     style: appTextTheme.bodySmall?.copyWith(
-                                      color: AppColors.kPrimary,
+                                      color: Theme.of(
+                                        context,
+                                      ).colorScheme.appText,
                                       fontWeight: FontWeight.w700,
                                     ),
                                   ),
