@@ -22,10 +22,18 @@ class AppTheme {
         overlayColor: WidgetStateProperty.all(AppColors.kTransparent),
       ),
     ),
+    bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+      backgroundColor: AppColors.kWhite,
+      selectedIconTheme: IconThemeData(color: AppColors.kPrimary),
+      unselectedIconTheme: IconThemeData(
+        color: AppColors.kBgLight2,
+      ),
+    ),
   );
 
   static ThemeData darkTheme = ThemeData(
     scaffoldBackgroundColor: AppColors.kMidnightViolet900,
+
     useMaterial3: true,
     textTheme: appTextTheme,
     colorScheme: const ColorScheme.dark(
@@ -41,6 +49,13 @@ class AppTheme {
     textButtonTheme: TextButtonThemeData(
       style: ButtonStyle(
         overlayColor: WidgetStateProperty.all(AppColors.kTransparent),
+      ),
+    ),
+    bottomNavigationBarTheme: BottomNavigationBarThemeData(
+      backgroundColor: AppColors.kMidnightViolet900,
+      selectedIconTheme: const IconThemeData(color: AppColors.kPrimary),
+      unselectedIconTheme: IconThemeData(
+        color: AppColors.kWhite.withValues(alpha: 0.5),
       ),
     ),
   );
