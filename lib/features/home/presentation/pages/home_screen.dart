@@ -1,10 +1,11 @@
 import 'package:clot/core/data/supabase_api_keys.dart';
+import 'package:clot/core/navigation/app_router.dart';
 import 'package:clot/core/theme/app_text_theme.dart';
 import 'package:clot/core/ui/components/app_text.dart';
 import 'package:clot/core/ui/components/layouts/app_scaffold.dart';
+import 'package:clot/core/ui/extensions/app_color_extension.dart';
 import 'package:clot/core/ui/extensions/app_spacing_extension.dart';
 import 'package:clot/core/ui/extensions/string_extension.dart';
-import 'package:clot/core/variables/app_images.dart';
 import 'package:clot/core/variables/app_radius.dart';
 import 'package:clot/core/variables/app_svg.dart';
 import 'package:clot/core/variables/colors.dart';
@@ -14,6 +15,7 @@ import 'package:clot/features/home/presentation/widgets/homedelegate_headers.dar
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -36,29 +38,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
     context.read<CategoriesBloc>().add(const GetCategories());
   }
-
-  List<Map<String, dynamic>> categories = [
-    {
-      'image': AppImages.kHoodies,
-      'text': 'Hoodies',
-    },
-    {
-      'image': AppImages.kShorts,
-      'text': 'Shorts',
-    },
-    {
-      'image': AppImages.kShoes,
-      'text': 'Shoes',
-    },
-    {
-      'image': AppImages.kBags,
-      'text': 'Bag',
-    },
-    {
-      'image': AppImages.kAccessories,
-      'text': 'Accessories',
-    },
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -96,13 +75,17 @@ class _HomeScreenState extends State<HomeScreen> {
                         'Categories',
                         style: appAltTextTheme.bodyLarge?.copyWith(
                           fontWeight: FontWeight.w800,
+                          color: Theme.of(context).colorScheme.appText,
                         ),
                       ),
-                      AppText(
-                        'See All',
-                        style: appTextTheme.bodyLarge!.copyWith(
-                          fontWeight: FontWeight.w400,
-                          color: AppColors.kBlack100,
+                      GestureDetector(
+                        onTap: () => context.push(SeeAllCategoriesRoute.path),
+                        child: AppText(
+                          'See All',
+                          style: appTextTheme.bodyLarge!.copyWith(
+                            fontWeight: FontWeight.w400,
+                            color: Theme.of(context).colorScheme.appText,
+                          ),
                         ),
                       ),
                     ],
