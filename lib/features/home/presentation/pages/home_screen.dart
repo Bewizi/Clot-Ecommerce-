@@ -12,6 +12,12 @@ import 'package:clot/core/variables/colors.dart';
 import 'package:clot/features/auth/presentation/bloc/bloc/auth_bloc.dart';
 import 'package:clot/features/home/presentation/bloc/categories_bloc.dart';
 import 'package:clot/features/home/presentation/widgets/homedelegate_headers.dart';
+import 'package:clot/features/products/bloc/bloc_new_in/new_in_bloc.dart';
+import 'package:clot/features/products/bloc/top_selling/bloc/top_selling_bloc.dart';
+// import 'package:clot/features/products/bloc/new_in/bloc/new_in_bloc.dart';
+import 'package:clot/features/products/data/products_data.dart';
+import 'package:clot/features/products/presentation/pages/top_selling.dart';
+import 'package:clot/features/products/presentation/pages/new_in.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -41,122 +47,143 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return AppScaffold(
-      body: CustomScrollView(
-        slivers: [
-          SliverPersistentHeader(
-            pinned: true,
-            delegate: HomeHeaderDelegate(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const CircleAvatar(
-                    radius: 20,
-                    backgroundColor: AppColors.kPrimary,
-                  ),
+    // Instantiate ProductsDataImpl directly — no context.read needed
+    final productsRepo = ProductsDataImpl();
 
-                  _buildGenderSelector(),
-
-                  _buildCart(),
-                ],
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (_) => TopSellingBloc(productsRepository: productsRepo),
+        ),
+        BlocProvider(
+          create: (_) => NewInBloc(productsRepository: productsRepo),
+        ),
+      ],
+      child: AppScaffold(
+        body: CustomScrollView(
+          slivers: [
+            SliverPersistentHeader(
+              pinned: true,
+              delegate: HomeHeaderDelegate(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const CircleAvatar(
+                      radius: 20,
+                      backgroundColor: AppColors.kPrimary,
+                    ),
+                    _buildGenderSelector(),
+                    _buildCart(),
+                  ],
+                ),
               ),
             ),
-          ),
 
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.only(top: 24),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      AppText(
-                        'Categories',
-                        style: appAltTextTheme.bodyLarge?.copyWith(
-                          fontWeight: FontWeight.w800,
-                          color: Theme.of(context).colorScheme.appText,
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () => context.push(SeeAllCategoriesRoute.path),
-                        child: AppText(
-                          'See All',
-                          style: appTextTheme.bodyLarge!.copyWith(
-                            fontWeight: FontWeight.w400,
+            // ── Categories ───────────────────────────────────────────
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: const EdgeInsets.only(top: 24),
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        AppText(
+                          'Categories',
+                          style: appAltTextTheme.bodyLarge?.copyWith(
+                            fontWeight: FontWeight.w800,
                             color: Theme.of(context).colorScheme.appText,
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                  // Your Search Bar and Categories go here
-                  16.verticalSpacing,
-                  BlocBuilder<CategoriesBloc, CategoriesState>(
-                    builder: (context, state) {
-                      if (state is CategoriesLoading) {
-                        return SizedBox(
-                          height: MediaQuery.sizeOf(context).height * 0.15,
-                          child: const Center(
-                            child: CircularProgressIndicator(),
+                        GestureDetector(
+                          onTap: () => context.push(SeeAllCategoriesRoute.path),
+                          child: AppText(
+                            'See All',
+                            style: appTextTheme.bodyLarge!.copyWith(
+                              fontWeight: FontWeight.w400,
+                              color: Theme.of(context).colorScheme.appText,
+                            ),
                           ),
-                        );
-                      }
-
-                      if (state is CategoriesError) {
-                        return SizedBox(
-                          height: 100,
-                          child: Center(child: AppText(state.message)),
-                        );
-                      }
-
-                      if (state is CategoriesLoaded) {
-                        return SizedBox(
-                          height: MediaQuery.sizeOf(context).height * 0.15,
-                          child: ListView.separated(
-                            scrollDirection: Axis.horizontal,
-                            itemBuilder: (context, index) {
-                              final category = state.categories[index];
-                              return Column(
-                                children: [
-                                  if (category.image.isNotEmpty)
-                                    Image.network(
-                                      category.image,
-                                      width: 80,
-                                      height: 80,
-                                      fit: BoxFit.cover,
-                                    )
-                                  else
-                                    Container(
-                                      width: 80,
-                                      height: 80,
-                                      color: AppColors.kBgLight2,
+                        ),
+                      ],
+                    ),
+                    16.verticalSpacing,
+                    BlocBuilder<CategoriesBloc, CategoriesState>(
+                      builder: (context, state) {
+                        if (state is CategoriesLoading) {
+                          return SizedBox(
+                            height: MediaQuery.sizeOf(context).height * 0.15,
+                            child: const Center(
+                              child: CircularProgressIndicator(),
+                            ),
+                          );
+                        }
+                        if (state is CategoriesError) {
+                          return SizedBox(
+                            height: 100,
+                            child: Center(child: AppText(state.message)),
+                          );
+                        }
+                        if (state is CategoriesLoaded) {
+                          return SizedBox(
+                            height: MediaQuery.sizeOf(context).height * 0.15,
+                            child: ListView.separated(
+                              scrollDirection: Axis.horizontal,
+                              itemBuilder: (context, index) {
+                                final category = state.categories[index];
+                                return Column(
+                                  children: [
+                                    if (category.image.isNotEmpty)
+                                      Image.network(
+                                        category.image,
+                                        width: 80,
+                                        height: 80,
+                                        fit: BoxFit.cover,
+                                      )
+                                    else
+                                      Container(
+                                        width: 80,
+                                        height: 80,
+                                        color: AppColors.kBgLight2,
+                                      ),
+                                    8.verticalSpacing,
+                                    AppText(
+                                      category.name.toTitleCase(),
+                                      style: appTextTheme.bodySmall,
                                     ),
-                                  8.verticalSpacing,
-                                  AppText(
-                                    category.name.toTitleCase(),
-                                    style: appTextTheme.bodySmall,
-                                  ),
-                                ],
-                              );
-                            },
-                            separatorBuilder: (context, index) =>
-                                16.horizontalSpacing,
-                            itemCount: state.categories.length,
-                          ),
-                        );
-                      }
-                      return const SizedBox.shrink();
-                    },
-                  ),
-
-                  // Add enough height to test the scroll
-                  const SizedBox(height: 1000),
-                ],
+                                  ],
+                                );
+                              },
+                              separatorBuilder: (_, _) => 16.horizontalSpacing,
+                              itemCount: state.categories.length,
+                            ),
+                          );
+                        }
+                        return const SizedBox.shrink();
+                      },
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+
+            // ── Top Selling ──────────────────────────────────────────
+            const SliverToBoxAdapter(
+              child: Padding(
+                padding: EdgeInsets.only(top: 24),
+                child: TopSelling(),
+              ),
+            ),
+
+            // ── New In ───────────────────────────────────────────────
+            const SliverToBoxAdapter(
+              child: Padding(
+                padding: EdgeInsets.only(top: 24),
+                child: NewIn(),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
