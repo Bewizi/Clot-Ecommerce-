@@ -5,6 +5,7 @@ import 'package:clot/core/ui/components/layouts/app_scaffold.dart';
 import 'package:clot/core/ui/extensions/app_color_extension.dart';
 import 'package:clot/core/ui/extensions/app_spacing_extension.dart';
 import 'package:clot/core/ui/extensions/string_extension.dart';
+import 'package:clot/core/variables/app_radius.dart';
 import 'package:clot/core/variables/colors.dart';
 import 'package:clot/features/products/bloc/products_bloc.dart';
 import 'package:flutter/material.dart';
@@ -92,7 +93,7 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
                       return Container(
                         decoration: BoxDecoration(
                           color: Theme.of(context).colorScheme.bgColor,
-                          borderRadius: BorderRadius.circular(16),
+                          borderRadius: BorderRadius.circular(AppRadius.medium),
                         ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -104,9 +105,18 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
                                 ),
                                 child: Image.network(
                                   product.image,
-                                  width: double.infinity,
-                                  // height: 200,
+                                  width: 200,
+                                  height: 200,
                                   fit: BoxFit.cover,
+                                  filterQuality: FilterQuality.high,
+                                  loadingBuilder:
+                                      (context, child, loadingProgress) =>
+                                          loadingProgress == null
+                                          ? child
+                                          : Container(
+                                              color: AppColors.kBgLight2,
+                                            ),
+
                                   errorBuilder: (context, error, stackTrace) =>
                                       Container(
                                         color: AppColors.kBgLight2,
