@@ -15,3 +15,24 @@ class GetProducts extends ProductsEvent {
   @override
   List<Object> get props => [categoryId];
 }
+
+class AllProducts extends ProductsEvent {
+  const AllProducts();
+
+  @override
+  List<Object> get props => [];
+}
+
+class GetTopSelling extends ProductsEvent {
+  const GetTopSelling();
+
+  @override
+  List<Object> get props => [];
+}
+
+class GetNewIn extends ProductsEvent {
+  const GetNewIn();
+
+  @override
+  List<Object> get props => [];
+}
