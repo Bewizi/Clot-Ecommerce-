@@ -1,7 +1,3 @@
-// id
-// name
-// image
-
 import 'package:equatable/equatable.dart';
 
 class CategoriesDomain extends Equatable {
