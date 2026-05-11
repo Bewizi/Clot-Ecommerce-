@@ -10,6 +10,7 @@ import 'package:clot/features/home/presentation/pages/see_all_categories.dart';
 import 'package:clot/features/notification_page/presentation/pages/notification_screen.dart';
 import 'package:clot/features/order/presentation/pages/order_screen.dart';
 import 'package:clot/features/products/presentation/pages/category_products_screen.dart';
+import 'package:clot/features/products/presentation/pages/product.dart';
 import 'package:clot/features/profile/presentation/pages/profile_screen.dart';
 import 'package:clot/features/splash_screen/splash_screen.dart';
 import 'package:flutter/material.dart';
@@ -128,6 +129,21 @@ class CategoryProductsRoute extends GoRouteData with $CategoryProductsRoute {
         categoryId: categoryId,
         categoryName: categoryName,
       );
+}
+
+// products
+@TypedGoRoute<ProductsRoute>(path: '/products/:productId')
+class ProductsRoute extends GoRouteData with $ProductsRoute {
+  const ProductsRoute({required this.productId});
+
+  final String productId;
+
+  // static const path = '/products';
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) => Product(
+    productId: productId,
+  );
 }
 
 /*
