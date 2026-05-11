@@ -10,4 +10,5 @@ class AppSvg {
   static const String kHome = 'assets/svgs/home.svg';
 
   static const String kBag = 'assets/svgs/bag2.svg';
+  static const String kHeart = 'assets/svgs/heart.svg';
 }
