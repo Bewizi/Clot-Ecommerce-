@@ -6,10 +6,12 @@ import 'package:clot/core/ui/extensions/app_color_extension.dart';
 import 'package:clot/core/ui/extensions/app_spacing_extension.dart';
 import 'package:clot/core/ui/extensions/string_extension.dart';
 import 'package:clot/core/variables/app_radius.dart';
+import 'package:clot/core/variables/app_svg.dart';
 import 'package:clot/core/variables/colors.dart';
 import 'package:clot/features/products/bloc/products_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class CategoryProductsScreen extends StatefulWidget {
   const CategoryProductsScreen({
@@ -103,24 +105,40 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
                                 borderRadius: const BorderRadius.vertical(
                                   top: Radius.circular(16),
                                 ),
-                                child: Image.network(
-                                  product.image,
-                                  width: 200,
-                                  height: 200,
-                                  fit: BoxFit.cover,
-                                  filterQuality: FilterQuality.high,
-                                  loadingBuilder:
-                                      (context, child, loadingProgress) =>
-                                          loadingProgress == null
-                                          ? child
-                                          : Container(
-                                              color: AppColors.kBgLight2,
-                                            ),
+                                child: Stack(
+                                  children: [
+                                    Image.network(
+                                      product.image,
+                                      width: 200,
+                                      height: 200,
+                                      fit: BoxFit.cover,
+                                      filterQuality: FilterQuality.high,
+                                      loadingBuilder:
+                                          (context, child, loadingProgress) =>
+                                              loadingProgress == null
+                                              ? child
+                                              : Container(
+                                                  color: AppColors.kBgLight2,
+                                                ),
 
-                                  errorBuilder: (context, error, stackTrace) =>
-                                      Container(
-                                        color: AppColors.kBgLight2,
+                                      errorBuilder:
+                                          (context, error, stackTrace) =>
+                                              Container(
+                                                color: AppColors.kBgLight2,
+                                              ),
+                                    ),
+                                    Positioned(
+                                      top: 9,
+                                      right: 8,
+
+                                      child: SvgPicture.asset(
+                                        AppSvg.kHeart,
+                                        fit: BoxFit.cover,
+                                        width: 24,
+                                        height: 24,
                                       ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),
