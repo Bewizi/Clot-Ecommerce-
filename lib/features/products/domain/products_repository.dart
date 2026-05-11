@@ -5,5 +5,5 @@ abstract class ProductsRepository {
   Future<List<ProductsDomain>> getAllProducts();
   Future<List<ProductsDomain>> getTopSellingProducts();
   Future<List<ProductsDomain>> getNewInProducts();
-  // Future<ProductsDomain> getProductById(String productId);
+  Future<ProductsDomain> getProductById(String productId);
 }

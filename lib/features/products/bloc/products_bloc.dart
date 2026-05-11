@@ -12,6 +12,7 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
     on<AllProducts>(_onAllProducts);
     on<GetTopSelling>(_onGetTopSelling);
     on<GetNewIn>(_onGetNewIn);
+    on<GetProductsById>(_onGetProductsById);
   }
 
   final ProductsRepository productsRepository;
@@ -65,6 +66,19 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
     try {
       final products = await productsRepository.getNewInProducts();
       emit(NewInLoaded(products: products));
+    } on Exception catch (e) {
+      emit(ProductsError(message: e.toString()));
+    }
+  }
+
+  Future<void> _onGetProductsById(
+    GetProductsById event,
+    Emitter<ProductsState> emit,
+  ) async {
+    emit(ProductsLoading());
+    try {
+      final product = await productsRepository.getProductById(event.productId);
+      emit(ProductsLoaded(products: [product]));
     } on Exception catch (e) {
       emit(ProductsError(message: e.toString()));
     }

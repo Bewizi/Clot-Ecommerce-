@@ -36,3 +36,12 @@ class GetNewIn extends ProductsEvent {
   @override
   List<Object> get props => [];
 }
+
+class GetProductsById extends ProductsEvent {
+  const GetProductsById({required this.productId});
+
+  final String productId;
+
+  @override
+  List<Object> get props => [productId];
+}

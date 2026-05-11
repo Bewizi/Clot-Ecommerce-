@@ -12,7 +12,9 @@ class ProductsDataImpl implements ProductsRepository {
       final response = await supaBase
           .schema('clot')
           .from('products')
-          .select('category_id, image_url, title, price,product_tag')
+          .select(
+            'id, category_id, image_url, title, price, description, product_tag',
+          )
           .eq('category_id', categoryId)
           .order('created_at', ascending: true);
 
@@ -30,7 +32,9 @@ class ProductsDataImpl implements ProductsRepository {
       final response = await supaBase
           .schema('clot')
           .from('products')
-          .select('tilte, price, image_url, product_tag');
+          .select(
+            'id, category_id, tilte, price, image_url, description, product_tag',
+          );
 
       debugPrint(response.length.toString());
       return (response as List<dynamic>)
@@ -47,7 +51,9 @@ class ProductsDataImpl implements ProductsRepository {
       final response = await supaBase
           .schema('clot')
           .from('products')
-          .select('title, price, image_url, product_tag')
+          .select(
+            'id, category_id, title, price, image_url, description, product_tag',
+          )
           .eq('product_tag', 'top_selling')
           .order('created_at', ascending: true);
       debugPrint(response.length.toString());
@@ -65,7 +71,9 @@ class ProductsDataImpl implements ProductsRepository {
       final response = await supaBase
           .schema('clot')
           .from('products')
-          .select('title, price, image_url, product_tag')
+          .select(
+            'id, category_id, title, price, image_url, description, product_tag',
+          )
           .eq('product_tag', 'new_in')
           .order('created_at', ascending: true);
       debugPrint(response.length.toString());
@@ -74,6 +82,23 @@ class ProductsDataImpl implements ProductsRepository {
           .toList();
     } catch (e) {
       throw Exception('Failed to fetch new in products: $e');
+    }
+  }
+
+  @override
+  Future<ProductsDomain> getProductById(String productId) async {
+    try {
+      final response = await supaBase
+          .schema('clot')
+          .from('products')
+          .select(
+            'id, category_id, title, price, image_url, description, product_tag',
+          )
+          .eq('id', productId)
+          .single();
+      return ProductsDomain.fromJson(response);
+    } catch (e) {
+      throw Exception('Failed to fetch product: $e');
     }
   }
 }
