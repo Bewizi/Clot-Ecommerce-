@@ -8,4 +8,6 @@ class AppImages {
   static const String kHoodies = 'assets/images/hoodies.png';
   static const String kShoes = 'assets/images/shoes.png';
   static const String kShorts = 'assets/images/shorts.png';
+
+  static const String kCartBag = 'assets/images/parcel 1.png';
 }
