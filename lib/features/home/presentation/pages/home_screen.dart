@@ -10,11 +10,11 @@ import 'package:clot/core/variables/app_radius.dart';
 import 'package:clot/core/variables/app_svg.dart';
 import 'package:clot/core/variables/colors.dart';
 import 'package:clot/features/auth/presentation/bloc/bloc/auth_bloc.dart';
+import 'package:clot/features/cart/presentation/bloc/cart_bloc.dart';
 import 'package:clot/features/home/presentation/bloc/categories_bloc.dart';
 import 'package:clot/features/home/presentation/widgets/homedelegate_headers.dart';
 import 'package:clot/features/products/bloc/bloc_new_in/new_in_bloc.dart';
 import 'package:clot/features/products/bloc/top_selling/bloc/top_selling_bloc.dart';
-// import 'package:clot/features/products/bloc/new_in/bloc/new_in_bloc.dart';
 import 'package:clot/features/products/data/products_data.dart';
 import 'package:clot/features/products/presentation/pages/top_selling.dart';
 import 'package:clot/features/products/presentation/pages/new_in.dart';
@@ -239,14 +239,37 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildCart() {
-    return Container(
-      height: 50,
-      width: 50,
-      decoration: BoxDecoration(
-        color: AppColors.kPrimary,
-        borderRadius: BorderRadius.circular(AppRadius.fullRadius),
-      ),
-      child: Center(child: SvgPicture.asset(AppSvg.kBag)),
+    return BlocBuilder<CartBloc, CartState>(
+      builder: (context, state) {
+        if (state is CartLoading) {
+          return Container(
+            height: 50,
+            width: 50,
+            decoration: const BoxDecoration(
+              color: AppColors.kBgLight2,
+              shape: BoxShape.circle,
+            ),
+            child: const CircularProgressIndicator(),
+          );
+        }
+        return Badge.count(
+          count: state is CartLoaded ? state.cartItems.length : 0,
+          alignment: Alignment.topLeft,
+          maxCount: 99,
+          child: GestureDetector(
+            onTap: () => context.push('/cart'),
+            child: Container(
+              height: 50,
+              width: 50,
+              decoration: BoxDecoration(
+                color: AppColors.kPrimary,
+                borderRadius: BorderRadius.circular(AppRadius.fullRadius),
+              ),
+              child: Center(child: SvgPicture.asset(AppSvg.kBag)),
+            ),
+          ),
+        );
+      },
     );
   }
 }
