@@ -11,6 +11,7 @@ import 'package:clot/features/products/bloc/products_bloc.dart';
 import 'package:clot/features/products/domain/products_domain.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:toastification/toastification.dart';
 
 class Product extends StatefulWidget {
   const Product({required this.productId, super.key});
@@ -161,6 +162,28 @@ class _ProductState extends State<Product> {
             price: product.price,
             image: product.image,
           ),
+        );
+
+        toastification.show(
+          context: context,
+          type: ToastificationType.success,
+          style: ToastificationStyle.flat,
+          title: AppText(
+            'Success',
+            style: appTextTheme.bodyLarge?.copyWith(
+              fontWeight: FontWeight.w800,
+            ),
+          ),
+          description: AppText(
+            'Product added to cart.',
+            style: appTextTheme.bodySmall,
+          ),
+          alignment: Alignment.topRight,
+          autoCloseDuration: const Duration(seconds: 4),
+          backgroundColor: AppColors.kPrimary,
+          foregroundColor: AppColors.kWhite,
+          borderSide: BorderSide.none,
+          borderRadius: BorderRadius.circular(12),
         );
       },
       child: Container(
