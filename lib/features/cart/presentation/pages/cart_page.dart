@@ -4,6 +4,7 @@ import 'package:clot/core/ui/components/app_text.dart';
 import 'package:clot/core/ui/components/layouts/app_scaffold.dart';
 import 'package:clot/core/ui/extensions/app_color_extension.dart';
 import 'package:clot/core/ui/extensions/app_spacing_extension.dart';
+import 'package:clot/core/variables/app_images.dart';
 import 'package:clot/core/variables/colors.dart';
 import 'package:clot/features/cart/domain/cart_domain.dart';
 import 'package:clot/features/cart/presentation/bloc/cart_bloc.dart';
@@ -95,10 +96,11 @@ class _CartPageState extends State<CartPage> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Icon(
-            Icons.shopping_bag_outlined,
-            size: 100,
-            color: AppColors.kPrimary,
+          Image.asset(
+            AppImages.kCartBag,
+            width: 120,
+            height: 120,
+            fit: BoxFit.cover,
           ),
           24.verticalSpacing,
           AppText(
