@@ -16,6 +16,7 @@ List<RouteBase> get $appRoutes => [
   $seeAllCategoriesRoute,
   $categoryProductsRoute,
   $productsRoute,
+  $cartPageRoute,
   $appShellRouteData,
 ];
 
@@ -249,6 +250,29 @@ mixin $ProductsRoute on GoRouteData {
   String get location => GoRouteData.$location(
     '/products/${Uri.encodeComponent(_self.productId)}',
   );
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $cartPageRoute =>
+    GoRouteData.$route(path: '/cart', factory: $CartPageRoute._fromState);
+
+mixin $CartPageRoute on GoRouteData {
+  static CartPageRoute _fromState(GoRouterState state) => CartPageRoute();
+
+  @override
+  String get location => GoRouteData.$location('/cart');
 
   @override
   void go(BuildContext context) => context.go(location);

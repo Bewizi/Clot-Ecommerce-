@@ -5,6 +5,7 @@ import 'package:clot/features/auth/presentation/pages/create_account/create_acco
 import 'package:clot/features/auth/presentation/pages/forgot_password/forgot_password.dart';
 import 'package:clot/features/auth/presentation/pages/forgot_password/otp_reset_password.dart';
 import 'package:clot/features/auth/presentation/pages/signin/signin.dart';
+import 'package:clot/features/cart/presentation/pages/cart_page.dart';
 import 'package:clot/features/home/presentation/pages/home_screen.dart';
 import 'package:clot/features/home/presentation/pages/see_all_categories.dart';
 import 'package:clot/features/notification_page/presentation/pages/notification_screen.dart';
@@ -144,6 +145,15 @@ class ProductsRoute extends GoRouteData with $ProductsRoute {
   Widget build(BuildContext context, GoRouterState state) => Product(
     productId: productId,
   );
+}
+
+// cart
+@TypedGoRoute<CartPageRoute>(path: '/cart')
+class CartPageRoute extends GoRouteData with $CartPageRoute {
+  // static const path = '/about-yourself';
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) => const CartPage();
 }
 
 /*
