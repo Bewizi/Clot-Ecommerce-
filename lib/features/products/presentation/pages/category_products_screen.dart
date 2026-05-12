@@ -1,3 +1,4 @@
+import 'package:clot/core/navigation/app_router.dart';
 import 'package:clot/core/theme/app_text_theme.dart';
 import 'package:clot/core/ui/components/app_back_button.dart';
 import 'package:clot/core/ui/components/app_text.dart';
@@ -92,85 +93,92 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
                     itemCount: state.products.length,
                     itemBuilder: (context, index) {
                       final product = state.products[index];
-                      return Container(
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).colorScheme.bgColor,
-                          borderRadius: BorderRadius.circular(AppRadius.medium),
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Expanded(
-                              child: ClipRRect(
-                                borderRadius: const BorderRadius.vertical(
-                                  top: Radius.circular(16),
-                                ),
-                                child: Stack(
-                                  children: [
-                                    Image.network(
-                                      product.image,
-                                      width: 200,
-                                      height: 200,
-                                      fit: BoxFit.cover,
-                                      filterQuality: FilterQuality.high,
-                                      loadingBuilder:
-                                          (context, child, loadingProgress) =>
-                                              loadingProgress == null
-                                              ? child
-                                              : Container(
+                      return GestureDetector(
+                        onTap: () => ProductsRoute(
+                          productId: product.productId,
+                        ).push(context),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).colorScheme.bgColor,
+                            borderRadius: BorderRadius.circular(
+                              AppRadius.medium,
+                            ),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Expanded(
+                                child: ClipRRect(
+                                  borderRadius: const BorderRadius.vertical(
+                                    top: Radius.circular(16),
+                                  ),
+                                  child: Stack(
+                                    children: [
+                                      Image.network(
+                                        product.image,
+                                        width: 200,
+                                        height: 200,
+                                        fit: BoxFit.cover,
+                                        filterQuality: FilterQuality.high,
+                                        loadingBuilder:
+                                            (context, child, loadingProgress) =>
+                                                loadingProgress == null
+                                                ? child
+                                                : Container(
+                                                    color: AppColors.kBgLight2,
+                                                  ),
+
+                                        errorBuilder:
+                                            (context, error, stackTrace) =>
+                                                Container(
                                                   color: AppColors.kBgLight2,
                                                 ),
+                                      ),
+                                      Positioned(
+                                        top: 9,
+                                        right: 8,
 
-                                      errorBuilder:
-                                          (context, error, stackTrace) =>
-                                              Container(
-                                                color: AppColors.kBgLight2,
-                                              ),
+                                        child: SvgPicture.asset(
+                                          AppSvg.kHeart,
+                                          fit: BoxFit.cover,
+                                          width: 24,
+                                          height: 24,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    AppText(
+                                      product.title,
+                                      style: appTextTheme.bodySmall?.copyWith(
+                                        color: Theme.of(
+                                          context,
+                                        ).colorScheme.appText,
+                                      ),
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
                                     ),
-                                    Positioned(
-                                      top: 9,
-                                      right: 8,
-
-                                      child: SvgPicture.asset(
-                                        AppSvg.kHeart,
-                                        fit: BoxFit.cover,
-                                        width: 24,
-                                        height: 24,
+                                    const SizedBox(height: 4),
+                                    AppText(
+                                      '\$${product.price.toStringAsFixed(2)}',
+                                      style: appTextTheme.bodySmall?.copyWith(
+                                        color: Theme.of(
+                                          context,
+                                        ).colorScheme.appText,
+                                        fontWeight: FontWeight.w700,
                                       ),
                                     ),
                                   ],
                                 ),
                               ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  AppText(
-                                    product.title,
-                                    style: appTextTheme.bodySmall?.copyWith(
-                                      color: Theme.of(
-                                        context,
-                                      ).colorScheme.appText,
-                                    ),
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                  const SizedBox(height: 4),
-                                  AppText(
-                                    '\$${product.price.toStringAsFixed(2)}',
-                                    style: appTextTheme.bodySmall?.copyWith(
-                                      color: Theme.of(
-                                        context,
-                                      ).colorScheme.appText,
-                                      fontWeight: FontWeight.w700,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       );
                     },
