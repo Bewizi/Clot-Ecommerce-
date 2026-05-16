@@ -3,7 +3,6 @@ import 'package:clot/core/theme/app_text_theme.dart';
 import 'package:clot/core/ui/components/app_back_button.dart';
 import 'package:clot/core/ui/components/app_text.dart';
 import 'package:clot/core/ui/components/layouts/app_scaffold.dart';
-import 'package:clot/core/ui/extensions/app_color_extension.dart';
 import 'package:clot/core/ui/extensions/app_spacing_extension.dart';
 import 'package:clot/core/variables/colors.dart';
 import 'package:clot/features/cart/presentation/bloc/cart_bloc.dart';
@@ -89,62 +88,13 @@ class _ProductState extends State<Product> {
                     ),
                   ),
                   24.verticalSpacing,
-                  _buildQuantity(),
-                  16.verticalSpacing,
+
                   AppText(product[0].description),
                 ],
               );
             }
             return const SizedBox.shrink();
           },
-        ),
-      ),
-    );
-  }
-
-  Widget _buildQuantity() {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
-      decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.bgColor,
-        borderRadius: BorderRadius.circular(100),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          AppText(
-            'Quantity',
-            style: appTextTheme.bodyLarge,
-          ),
-          Row(
-            children: [
-              _buildSign('+'),
-              16.horizontalSpacing,
-              AppText(
-                '1',
-                style: appTextTheme.bodyLarge,
-              ),
-              16.horizontalSpacing,
-              _buildSign('-'),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildSign(String sign) {
-    return Container(
-      width: 32,
-      height: 32,
-      decoration: const BoxDecoration(
-        shape: BoxShape.circle,
-        color: AppColors.kPrimary,
-      ),
-      child: Center(
-        child: AppText(
-          sign,
-          style: appAltTextTheme.titleMedium?.copyWith(color: AppColors.kWhite),
         ),
       ),
     );
