@@ -1,3 +1,4 @@
+import 'package:clot/core/navigation/app_router.dart';
 import 'package:clot/core/theme/app_text_theme.dart';
 import 'package:clot/core/ui/components/app_button.dart';
 import 'package:clot/core/ui/components/app_text.dart';
@@ -65,7 +66,9 @@ class OrderSuccessfulPage extends StatelessWidget {
             40.verticalSpacing,
             PrimaryButton(
               'See Order details',
-              pressed: () {},
+              pressed: () {
+                OrderPageRoute().go(context);
+              },
             ),
           ],
         ),
