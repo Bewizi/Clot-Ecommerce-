@@ -10,4 +10,6 @@ class AppImages {
   static const String kShorts = 'assets/images/shorts.png';
 
   static const String kCartBag = 'assets/images/parcel 1.png';
+  static const String kOrderSuccessImage =
+      'assets/images/cart_success_image.png';
 }
