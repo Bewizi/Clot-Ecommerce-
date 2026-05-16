@@ -7,6 +7,7 @@ import 'package:clot/features/auth/presentation/pages/forgot_password/otp_reset_
 import 'package:clot/features/auth/presentation/pages/signin/signin.dart';
 import 'package:clot/features/cart/presentation/pages/cart_page.dart';
 import 'package:clot/features/cart/presentation/pages/checkout_page.dart';
+import 'package:clot/features/cart/presentation/pages/order_successful_page.dart';
 import 'package:clot/features/home/presentation/pages/home_screen.dart';
 import 'package:clot/features/home/presentation/pages/see_all_categories.dart';
 import 'package:clot/features/notification_page/presentation/pages/notification_screen.dart';
@@ -165,6 +166,17 @@ class CheckoutPageRoute extends GoRouteData with $CheckoutPageRoute {
   @override
   Widget build(BuildContext context, GoRouterState state) =>
       const CheckoutPage();
+}
+
+// order successful
+@TypedGoRoute<OrderSuccessfulPageRoute>(path: '/order-successful')
+class OrderSuccessfulPageRoute extends GoRouteData
+    with $OrderSuccessfulPageRoute {
+  // static const path = '/about-yourself';
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) =>
+      const OrderSuccessfulPage();
 }
 
 /*
