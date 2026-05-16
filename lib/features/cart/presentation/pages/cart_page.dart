@@ -10,6 +10,7 @@ import 'package:clot/features/cart/domain/cart_domain.dart';
 import 'package:clot/features/cart/presentation/bloc/cart_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class CartPage extends StatefulWidget {
@@ -364,8 +365,8 @@ class _CartPageState extends State<CartPage> {
                 ),
                 padding: const EdgeInsets.symmetric(vertical: 16),
               ),
-              onPressed: () {
-                // TODO: navigate to checkout
+              onPressed: () async {
+                await context.push('/checkout');
               },
               child: AppText(
                 'Checkout',
