@@ -1,3 +1,4 @@
+import 'package:clot/core/theme/app_text_theme.dart';
 import 'package:clot/core/ui/components/app_text.dart';
 import 'package:clot/core/ui/extensions/app_color_extension.dart';
 import 'package:clot/core/ui/extensions/app_spacing_extension.dart';
@@ -19,6 +20,9 @@ class AppTextField extends StatelessWidget {
     this.prefixIconConstraints,
     this.onSuffixIconTap,
     this.onChanged,
+    this.inputDecoration,
+    this.verticalSpacing,
+
     super.key,
   });
 
@@ -34,48 +38,52 @@ class AppTextField extends StatelessWidget {
   final BoxConstraints? prefixIconConstraints;
   final VoidCallback? onSuffixIconTap;
   final void Function(String)? onChanged;
+  final InputDecoration? inputDecoration;
+  final double? verticalSpacing;
 
   Widget _buildTextFormField(BuildContext context) {
     return TextFormField(
       validator: validator,
       controller: controller,
       onChanged: onChanged,
-      decoration: InputDecoration(
-        filled: true,
-        fillColor: Theme.of(context).colorScheme.secondary,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(AppRadius.medium),
-          borderSide: BorderSide.none,
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(AppRadius.medium),
-          borderSide: BorderSide.none,
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(AppRadius.medium),
-          borderSide: BorderSide.none,
-        ),
-        errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(AppRadius.medium),
-          borderSide: const BorderSide(color: AppColors.kDestructive50),
-        ),
-        hintText: hintText,
-        contentPadding: const EdgeInsets.symmetric(
-          vertical: 19,
-          horizontal: 19,
-        ),
-        hintStyle: TextStyle(color: Theme.of(context).colorScheme.hintText),
-        prefixIcon: prefixIcon,
-        suffixIcon: suffixIcon != null
-            ? InkWell(
-                onTap: onSuffixIconTap,
-                child: suffixIcon,
-              )
-            : null,
-        prefixIconColor: Theme.of(context).colorScheme.hintText,
-        suffixIconColor: Theme.of(context).colorScheme.hintText,
-        prefixIconConstraints: prefixIconConstraints,
-      ),
+      decoration:
+          inputDecoration ??
+          InputDecoration(
+            filled: true,
+            fillColor: Theme.of(context).colorScheme.secondary,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(AppRadius.medium),
+              borderSide: BorderSide.none,
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(AppRadius.medium),
+              borderSide: BorderSide.none,
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(AppRadius.medium),
+              borderSide: BorderSide.none,
+            ),
+            errorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(AppRadius.medium),
+              borderSide: const BorderSide(color: AppColors.kDestructive50),
+            ),
+            hintText: hintText,
+            contentPadding: const EdgeInsets.symmetric(
+              vertical: 19,
+              horizontal: 19,
+            ),
+            hintStyle: TextStyle(color: Theme.of(context).colorScheme.hintText),
+            prefixIcon: prefixIcon,
+            suffixIcon: suffixIcon != null
+                ? InkWell(
+                    onTap: onSuffixIconTap,
+                    child: suffixIcon,
+                  )
+                : null,
+            prefixIconColor: Theme.of(context).colorScheme.hintText,
+            suffixIconColor: Theme.of(context).colorScheme.hintText,
+            prefixIconConstraints: prefixIconConstraints,
+          ),
       keyboardType: keyboardType,
       obscureText: obscureText,
     );
@@ -89,16 +97,13 @@ class AppTextField extends StatelessWidget {
         if (showTitle && title != null) ...[
           AppText(
             title!,
-            style:
-                Theme.of(
-                  context,
-                ).textTheme.titleSmall?.copyWith(
-                  color: AppColors.kBgLight2,
-                  fontWeight: FontWeight.w600,
-                ),
+            style: appTextTheme.titleSmall?.copyWith(
+              color: Theme.of(context).colorScheme.appTextFieldText,
+              fontWeight: FontWeight.w600,
+            ),
           ),
         ],
-        16.verticalSpacing,
+        SizedBox(height: verticalSpacing ?? 16),
         _buildTextFormField(context),
       ],
     );
