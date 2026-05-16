@@ -13,4 +13,8 @@ extension AppColorScheme on ColorScheme {
   Color get bgColor => brightness == Brightness.dark
       ? AppColors.kShadowGrey800
       : AppColors.kBgLight2;
+
+  Color get appTextFieldText => brightness == Brightness.dark
+      ? AppColors.kWhite.withValues(alpha: 0.5)
+      : AppColors.kBlack100.withValues(alpha: 0.5);
 }
