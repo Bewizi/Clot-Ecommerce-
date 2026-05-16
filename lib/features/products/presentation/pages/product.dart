@@ -155,7 +155,7 @@ class _ProductState extends State<Product> {
 
             AppText(
               'Add to Bag',
-              style: appTextTheme.bodyLarge,
+              style: appTextTheme.bodyLarge?.copyWith(color: AppColors.kWhite),
             ),
           ],
         ),
