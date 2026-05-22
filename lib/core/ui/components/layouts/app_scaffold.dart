@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:clot/core/variables/app_inset.dart';
+import 'package:flutter/material.dart';
 
 class AppScaffold extends StatelessWidget {
   const AppScaffold({
@@ -28,9 +28,9 @@ class AppScaffold extends StatelessWidget {
       body: SafeArea(
         child: padding
             ? Padding(
-          padding: AppInset.screenSymmetric,
-          child: body,
-        )
+                padding: AppInset.screenSymmetric,
+                child: body,
+              )
             : body,
       ),
     );
