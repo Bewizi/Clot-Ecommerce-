@@ -3,22 +3,27 @@ import 'package:google_fonts/google_fonts.dart';
 
 const TextTheme _baseTextTheme = TextTheme(
   headlineLarge: TextStyle(
-    fontWeight: FontWeight.w800,
+    fontSize: 32,
+    fontWeight: FontWeight.w400,
   ),
   displaySmall: TextStyle(
-    fontWeight: FontWeight.w800,
+    fontSize: 36,
+    fontWeight: FontWeight.w400,
   ),
   headlineSmall: TextStyle(
     fontSize: 24,
-    fontWeight: FontWeight.w800,
+    fontWeight: FontWeight.w400,
   ),
   titleMedium: TextStyle(
-    fontWeight: FontWeight.w800,
+    fontSize: 16,
+    fontWeight: FontWeight.w400,
   ),
   titleSmall: TextStyle(
-    fontWeight: FontWeight.w700,
+    fontSize: 14,
+    fontWeight: FontWeight.w400,
   ),
   bodySmall: TextStyle(
+    fontSize: 12,
     fontWeight: FontWeight.w400,
   ),
 );
