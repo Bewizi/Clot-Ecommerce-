@@ -4,15 +4,13 @@ class OrdersDomain {
   final String userId;
   final String status;
   final String shippingAddress;
+  final String? shippingPhone;
   final DateTime placedAt;
-  final DateTime confirmedAt;
-  final DateTime shippedAt;
-  final DateTime deliveredAt;
-  final DateTime returnedAt;
-  final DateTime canceledAt;
-
-  // final List<OrderItem> items;
-  // final double totalPrice;
+  final DateTime? confirmedAt;
+  final DateTime? shippedAt;
+  final DateTime? deliveredAt;
+  final DateTime? returnedAt;
+  final DateTime? canceledAt;
 
   OrdersDomain({
     required this.id,
@@ -20,14 +18,13 @@ class OrdersDomain {
     required this.userId,
     required this.status,
     required this.shippingAddress,
+    this.shippingPhone,
     required this.placedAt,
-    required this.confirmedAt,
-    required this.shippedAt,
-    required this.deliveredAt,
-    required this.returnedAt,
-    required this.canceledAt,
-    // required this.items,
-    // required this.totalPrice,
+    this.confirmedAt,
+    this.shippedAt,
+    this.deliveredAt,
+    this.returnedAt,
+    this.canceledAt,
   });
 
   factory OrdersDomain.fromJson(Map<String, dynamic> json) {
@@ -37,24 +34,23 @@ class OrdersDomain {
       userId: json['user_id'] as String,
       status: json['status'] as String,
       shippingAddress: json['shipping_address'] as String,
-      placedAt: json['placed_at'] != null
-          ? DateTime.parse(json['placed_at'] as String)
-          : DateTime.now(),
+      shippingPhone: json['shipping_phone'] as String?,
+      placedAt: DateTime.parse(json['placed_at'] as String),
       confirmedAt: json['confirmed_at'] != null
           ? DateTime.parse(json['confirmed_at'] as String)
-          : DateTime.now(),
+          : null,
       shippedAt: json['shipped_at'] != null
           ? DateTime.parse(json['shipped_at'] as String)
-          : DateTime.now(),
+          : null,
       deliveredAt: json['delivered_at'] != null
           ? DateTime.parse(json['delivered_at'] as String)
-          : DateTime.now(),
+          : null,
       returnedAt: json['returned_at'] != null
           ? DateTime.parse(json['returned_at'] as String)
-          : DateTime.now(),
+          : null,
       canceledAt: json['canceled_at'] != null
           ? DateTime.parse(json['canceled_at'] as String)
-          : DateTime.now(),
+          : null,
     );
   }
 
@@ -64,6 +60,7 @@ class OrdersDomain {
     String? userId,
     String? status,
     String? shippingAddress,
+    String? shippingPhone,
     DateTime? placedAt,
     DateTime? confirmedAt,
     DateTime? shippedAt,
@@ -77,6 +74,7 @@ class OrdersDomain {
       userId: userId ?? this.userId,
       status: status ?? this.status,
       shippingAddress: shippingAddress ?? this.shippingAddress,
+      shippingPhone: shippingPhone ?? this.shippingPhone,
       placedAt: placedAt ?? this.placedAt,
       confirmedAt: confirmedAt ?? this.confirmedAt,
       shippedAt: shippedAt ?? this.shippedAt,
@@ -89,16 +87,17 @@ class OrdersDomain {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'orderNumber': orderNumber,
-      'userId': userId,
+      'order_number': orderNumber,
+      'user_id': userId,
       'status': status,
-      'shippingAddress': shippingAddress,
-      'placedAt': placedAt.toIso8601String(),
-      'confirmedAt': confirmedAt.toIso8601String(),
-      'shippedAt': shippedAt.toIso8601String(),
-      'deliveredAt': deliveredAt.toIso8601String(),
-      'returnedAt': returnedAt.toIso8601String(),
-      'canceledAt': canceledAt.toIso8601String(),
+      'shipping_address': shippingAddress,
+      'shipping_phone': shippingPhone,
+      'placed_at': placedAt.toIso8601String(),
+      'confirmed_at': confirmedAt?.toIso8601String(),
+      'shipped_at': shippedAt?.toIso8601String(),
+      'delivered_at': deliveredAt?.toIso8601String(),
+      'returned_at': returnedAt?.toIso8601String(),
+      'canceled_at': canceledAt?.toIso8601String(),
     };
   }
 
@@ -108,6 +107,7 @@ class OrdersDomain {
     userId,
     status,
     shippingAddress,
+    shippingPhone,
     placedAt,
     confirmedAt,
     shippedAt,
