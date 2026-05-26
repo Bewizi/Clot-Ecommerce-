@@ -19,6 +19,7 @@ List<RouteBase> get $appRoutes => [
   $cartPageRoute,
   $checkoutPageRoute,
   $orderSuccessfulPageRoute,
+  $orderDetailsPageRoute,
   $appShellRouteData,
 ];
 
@@ -327,6 +328,36 @@ mixin $OrderSuccessfulPageRoute on GoRouteData {
 
   @override
   String get location => GoRouteData.$location('/order-successful');
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $orderDetailsPageRoute => GoRouteData.$route(
+  path: '/order-details/:orderId',
+  factory: $OrderDetailsPageRoute._fromState,
+);
+
+mixin $OrderDetailsPageRoute on GoRouteData {
+  static OrderDetailsPageRoute _fromState(GoRouterState state) =>
+      OrderDetailsPageRoute(orderId: state.pathParameters['orderId']!);
+
+  OrderDetailsPageRoute get _self => this as OrderDetailsPageRoute;
+
+  @override
+  String get location => GoRouteData.$location(
+    '/order-details/${Uri.encodeComponent(_self.orderId)}',
+  );
 
   @override
   void go(BuildContext context) => context.go(location);

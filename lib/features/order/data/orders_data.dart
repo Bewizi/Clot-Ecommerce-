@@ -66,7 +66,7 @@ class OrdersDataImp implements OrdersRepository {
   }) async {
     try {
       // Generate a unique order number using timestamp + random suffix
-      final orderNumber = 'ORD-${DateTime.now().millisecondsSinceEpoch}';
+      final orderNumber = '${DateTime.now().millisecondsSinceEpoch}';
 
       final orderResponse = await supaBase
           .schema('clot')
@@ -98,11 +98,11 @@ class OrdersDataImp implements OrdersRepository {
       await supaBase.schema('clot').from('order_items').insert(items);
 
       // Clear the user's cart
-      await supaBase
-          .schema('clot')
-          .from('cart')
-          .delete()
-          .eq('user_id', supaBase.auth.currentUser!.id);
+      // await supaBase
+      //     .schema('clot')
+      //     .from('cart')
+      //     .delete()
+      //     .eq('user_id', supaBase.auth.currentUser!.id);
 
       return orderId;
     } on Exception catch (e) {

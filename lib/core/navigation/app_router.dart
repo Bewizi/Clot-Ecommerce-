@@ -11,6 +11,7 @@ import 'package:clot/features/cart/presentation/pages/order_successful_page.dart
 import 'package:clot/features/home/presentation/pages/home_screen.dart';
 import 'package:clot/features/home/presentation/pages/see_all_categories.dart';
 import 'package:clot/features/notification_page/presentation/pages/notification_screen.dart';
+import 'package:clot/features/order/presentation/pages/order_details_screen.dart';
 import 'package:clot/features/order/presentation/pages/order_screen.dart';
 import 'package:clot/features/products/presentation/pages/category_products_screen.dart';
 import 'package:clot/features/products/presentation/pages/product.dart';
@@ -179,37 +180,17 @@ class OrderSuccessfulPageRoute extends GoRouteData
       const OrderSuccessfulPage();
 }
 
-/*
+//Order details
+@TypedGoRoute<OrderDetailsPageRoute>(path: '/order-details/:orderId')
+class OrderDetailsPageRoute extends GoRouteData with $OrderDetailsPageRoute {
+  const OrderDetailsPageRoute({required this.orderId});
 
-
-
-
-
-
-// see all homes
-@TypedGoRoute<SeeAllHomesRoute>(path: SeeAllHomesRoute.path)
-class SeeAllHomesRoute extends GoRouteData with $SeeAllHomesRoute {
-  static const path = '/see-all-homes';
+  final String orderId;
 
   @override
   Widget build(BuildContext context, GoRouterState state) =>
-      const SeeAllHomes();
+      OrderDetailsScreen(orderId: orderId);
 }
-
-
-
-// apartment view base on the id
-@TypedGoRoute<ApartmentViewRoute>(path: '/apartment-view/:id')
-class ApartmentViewRoute extends GoRouteData with $ApartmentViewRoute {
-  final String id;
-
-  const ApartmentViewRoute({required this.id});
-
-  @override
-  Widget build(BuildContext context, GoRouterState state) =>
-      ApartmentView(id: id);
-}
-*/
 
 //MAIN APP SHELL WITH BOTTOM NAV  (NESTED ROUTING)
 @TypedStatefulShellRoute<AppShellRouteData>(
