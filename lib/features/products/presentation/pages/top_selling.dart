@@ -44,7 +44,7 @@ class _TopSellingState extends State<TopSelling> {
               ),
             ),
             GestureDetector(
-              onTap: () => context.push(''), // wire up your route
+              onTap: () => context.push('/top-selling'), // wire up your route
               child: AppText(
                 'See All',
                 style: appTextTheme.bodyLarge!.copyWith(
@@ -116,7 +116,7 @@ class _ProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 150,
+      width: MediaQuery.sizeOf(context).width * 0.35,
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.bgColor,
         borderRadius: BorderRadius.circular(AppRadius.medium),
