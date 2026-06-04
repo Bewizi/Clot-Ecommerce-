@@ -8,6 +8,8 @@ import 'package:clot/features/order/data/orders_data.dart';
 import 'package:clot/features/order/presentation/bloc/orders_bloc.dart';
 import 'package:clot/features/products/bloc/products_bloc.dart';
 import 'package:clot/features/products/data/products_data.dart';
+import 'package:clot/features/profile/data/profile_data.dart';
+import 'package:clot/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 final List<BlocProvider> appBlocProvider = [
@@ -26,5 +28,8 @@ final List<BlocProvider> appBlocProvider = [
   ),
   BlocProvider<OrdersBloc>(
     create: (context) => OrdersBloc(ordersRepository: OrdersDataImp()),
+  ),
+  BlocProvider<ProfileBloc>(
+    create: (context) => ProfileBloc(profileRepository: ProfileDataImpl()),
   ),
 ];
