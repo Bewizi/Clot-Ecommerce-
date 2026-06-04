@@ -197,7 +197,7 @@ class _HomeScreenState extends State<HomeScreen> {
             width: 120,
             decoration: BoxDecoration(
               color: AppColors.kBgLight2,
-              borderRadius: BorderRadius.circular(AppRadius.fullRadius),
+              borderRadius: AppRadius.fullRadius,
             ),
             child: const Center(
               child: SizedBox(
@@ -222,7 +222,7 @@ class _HomeScreenState extends State<HomeScreen> {
           width: 100,
           decoration: BoxDecoration(
             color: AppColors.kBgLight2,
-            borderRadius: BorderRadius.circular(AppRadius.fullRadius),
+            borderRadius: AppRadius.fullRadius,
           ),
           child: Center(
             child: AppText(
@@ -263,7 +263,7 @@ class _HomeScreenState extends State<HomeScreen> {
               width: 50,
               decoration: BoxDecoration(
                 color: AppColors.kPrimary,
-                borderRadius: BorderRadius.circular(AppRadius.fullRadius),
+                borderRadius: AppRadius.fullRadius,
               ),
               child: Center(child: SvgPicture.asset(AppSvg.kBag)),
             ),
