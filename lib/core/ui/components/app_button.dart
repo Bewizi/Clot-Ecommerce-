@@ -42,7 +42,7 @@ class PrimaryButton extends StatelessWidget {
             ),
         decoration: BoxDecoration(
           color: color ?? AppColors.kPrimary,
-          borderRadius: BorderRadius.circular(AppRadius.fullRadius),
+          borderRadius: AppRadius.fullRadius,
         ),
         child: AppText(
           text,
@@ -98,7 +98,7 @@ class OutlineButton extends StatelessWidget {
         ),
         decoration: BoxDecoration(
           color: bgColor ?? AppColors.kBlack100,
-          borderRadius: BorderRadius.circular(borderRadius ?? AppRadius.lager),
+          borderRadius: BorderRadius.circular(borderRadius ?? AppRadius.large),
           border: Border.all(color: borderColor ?? AppColors.kPrimary),
         ),
         child: Center(
@@ -155,7 +155,7 @@ class IconConButton extends StatelessWidget {
           shape: shape ?? BoxShape.rectangle,
           borderRadius: shape == BoxShape.circle
               ? null
-              : BorderRadius.circular(borderRadius ?? AppRadius.lager),
+              : BorderRadius.circular(borderRadius ?? AppRadius.large),
         ),
         child: child,
       ),
