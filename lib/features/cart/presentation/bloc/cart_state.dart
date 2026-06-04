@@ -21,7 +21,7 @@ final class CartLoaded extends CartState {
 
   double get shippingCost => cartItems.isEmpty ? 0 : 8.0;
 
-  double get tax => 0.0;
+  double get tax => 0;
 
   double get total => subtotal + shippingCost + tax;
 

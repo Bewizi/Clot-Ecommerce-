@@ -1,7 +1,6 @@
 import 'package:clot/core/theme/app_text_theme.dart';
 import 'package:clot/core/ui/components/app_text.dart';
 import 'package:clot/core/ui/extensions/app_color_extension.dart';
-import 'package:clot/core/ui/extensions/app_spacing_extension.dart';
 import 'package:clot/core/variables/app_radius.dart';
 import 'package:clot/core/variables/colors.dart';
 import 'package:flutter/material.dart';
