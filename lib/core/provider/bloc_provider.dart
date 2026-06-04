@@ -7,6 +7,7 @@ import 'package:clot/features/home/presentation/bloc/categories_bloc.dart';
 import 'package:clot/features/order/data/orders_data.dart';
 import 'package:clot/features/order/presentation/bloc/orders_bloc.dart';
 import 'package:clot/features/products/bloc/products_bloc.dart';
+import 'package:clot/features/products/bloc/top_selling/bloc/top_selling_bloc.dart';
 import 'package:clot/features/products/data/products_data.dart';
 import 'package:clot/features/profile/data/profile_data.dart';
 import 'package:clot/features/profile/presentation/bloc/profile_bloc.dart';
@@ -31,5 +32,11 @@ final List<BlocProvider> appBlocProvider = [
   ),
   BlocProvider<ProfileBloc>(
     create: (context) => ProfileBloc(profileRepository: ProfileDataImpl()),
+  ),
+
+  BlocProvider(
+    create: (context) => TopSellingBloc(
+      productsRepository: ProductsDataImpl(),
+    )..add(const FetchTopSelling()),
   ),
 ];
