@@ -10,6 +10,7 @@ import 'package:clot/features/cart/presentation/pages/checkout_page.dart';
 import 'package:clot/features/cart/presentation/pages/order_successful_page.dart';
 import 'package:clot/features/home/presentation/pages/home_screen.dart';
 import 'package:clot/features/home/presentation/pages/see_all_categories.dart';
+import 'package:clot/features/new_in/presentation/pages/new_in_screen.dart';
 import 'package:clot/features/notification_page/presentation/pages/notification_screen.dart';
 import 'package:clot/features/order/presentation/pages/order_details_screen.dart';
 import 'package:clot/features/order/presentation/pages/order_screen.dart';
@@ -17,6 +18,7 @@ import 'package:clot/features/products/presentation/pages/category_products_scre
 import 'package:clot/features/products/presentation/pages/product.dart';
 import 'package:clot/features/profile/presentation/pages/profile_screen.dart';
 import 'package:clot/features/splash_screen/splash_screen.dart';
+import 'package:clot/features/top_selling/presentation/pages/top_selling_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
@@ -190,6 +192,22 @@ class OrderDetailsPageRoute extends GoRouteData with $OrderDetailsPageRoute {
   @override
   Widget build(BuildContext context, GoRouterState state) =>
       OrderDetailsScreen(orderId: orderId);
+}
+
+// TopSelling
+@TypedGoRoute<TopSellingScreenRoute>(path: '/top-selling')
+class TopSellingScreenRoute extends GoRouteData with $TopSellingScreenRoute {
+  @override
+  Widget build(BuildContext context, GoRouterState state) =>
+      const TopSellingScreen();
+}
+
+// New In
+@TypedGoRoute<NewInScreenRoute>(path: '/new-in')
+class NewInScreenRoute extends GoRouteData with $NewInScreenRoute {
+  @override
+  Widget build(BuildContext context, GoRouterState state) =>
+      const NewInScreen();
 }
 
 //MAIN APP SHELL WITH BOTTOM NAV  (NESTED ROUTING)

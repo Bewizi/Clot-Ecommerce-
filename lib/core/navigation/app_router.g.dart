@@ -20,6 +20,8 @@ List<RouteBase> get $appRoutes => [
   $checkoutPageRoute,
   $orderSuccessfulPageRoute,
   $orderDetailsPageRoute,
+  $topSellingScreenRoute,
+  $newInScreenRoute,
   $appShellRouteData,
 ];
 
@@ -358,6 +360,55 @@ mixin $OrderDetailsPageRoute on GoRouteData {
   String get location => GoRouteData.$location(
     '/order-details/${Uri.encodeComponent(_self.orderId)}',
   );
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $topSellingScreenRoute => GoRouteData.$route(
+  path: '/top-selling',
+  factory: $TopSellingScreenRoute._fromState,
+);
+
+mixin $TopSellingScreenRoute on GoRouteData {
+  static TopSellingScreenRoute _fromState(GoRouterState state) =>
+      TopSellingScreenRoute();
+
+  @override
+  String get location => GoRouteData.$location('/top-selling');
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $newInScreenRoute =>
+    GoRouteData.$route(path: '/new-in', factory: $NewInScreenRoute._fromState);
+
+mixin $NewInScreenRoute on GoRouteData {
+  static NewInScreenRoute _fromState(GoRouterState state) => NewInScreenRoute();
+
+  @override
+  String get location => GoRouteData.$location('/new-in');
 
   @override
   void go(BuildContext context) => context.go(location);
