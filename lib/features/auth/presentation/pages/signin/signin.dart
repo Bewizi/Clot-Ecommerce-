@@ -29,6 +29,7 @@ class _SignInState extends State<SignIn> {
   final formKey = GlobalKey<FormState>();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  bool _isPasswordVisible = false;
 
   @override
   void dispose() {
@@ -36,6 +37,13 @@ class _SignInState extends State<SignIn> {
     passwordController.dispose();
 
     super.dispose();
+  }
+
+  void togglePasswordVisibility() {
+    setState(() {
+      // This will trigger a rebuild to update the UI
+      _isPasswordVisible = !_isPasswordVisible;
+    });
   }
 
   @override
@@ -90,8 +98,15 @@ class _SignInState extends State<SignIn> {
                             hintText: 'Password',
                             controller: passwordController,
                             prefixIcon: const Icon(Icons.lock_outline_rounded),
-                            suffixIcon: const Icon(Icons.visibility_outlined),
-                            obscureText: true,
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                _isPasswordVisible
+                                    ? Icons.visibility_outlined
+                                    : Icons.visibility_off_outlined,
+                              ),
+                              onPressed: togglePasswordVisibility,
+                            ),
+                            obscureText: !_isPasswordVisible,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Please enter your password';
