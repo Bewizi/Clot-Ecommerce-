@@ -226,7 +226,7 @@
 			);
 			mainGroup = 97C146E51CF9000F007C117D;
 			packageReferences = (
-				781AD8BC2B33823900A9FFBB /* XCLocalSwiftPackageReference "FlutterGeneratedPluginSwiftPackage" */,
+				781AD8BC2B33823900A9FFBB /* XCLocalSwiftPackageReference "Flutter/ephemeral/Packages/FlutterGeneratedPluginSwiftPackage" */,
 			);
 			productRefGroup = 97C146EF1CF9000F007C117D /* Products */;
 			projectDirPath = "";
@@ -407,6 +407,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
+				DEVELOPMENT_TEAM = 95J49CMCMS;
 				ENABLE_BITCODE = NO;
 				FLAVOR_APP_NAME = Clot;
 				FLUTTER_TARGET = lib/main_production.dart;
@@ -501,6 +502,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
+				DEVELOPMENT_TEAM = 95J49CMCMS;
 				ENABLE_BITCODE = NO;
 				FLAVOR_APP_NAME = Clot;
 				FLUTTER_TARGET = lib/main_production.dart;
@@ -590,6 +592,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
+				DEVELOPMENT_TEAM = 95J49CMCMS;
 				ENABLE_BITCODE = NO;
 				FLAVOR_APP_NAME = Clot;
 				FLUTTER_TARGET = lib/main_production.dart;
@@ -684,6 +687,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
+				DEVELOPMENT_TEAM = 95J49CMCMS;
 				ENABLE_BITCODE = NO;
 				FLAVOR_APP_NAME = "[DEV] Clot";
 				FLUTTER_TARGET = lib/main_development.dart;
@@ -776,6 +780,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
+				DEVELOPMENT_TEAM = 95J49CMCMS;
 				ENABLE_BITCODE = NO;
 				FLAVOR_APP_NAME = "[DEV] Clot";
 				FLUTTER_TARGET = lib/main_development.dart;
@@ -867,6 +872,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
+				DEVELOPMENT_TEAM = 95J49CMCMS;
 				ENABLE_BITCODE = NO;
 				FLAVOR_APP_NAME = "[DEV] Clot";
 				FLUTTER_TARGET = lib/main_development.dart;
@@ -961,6 +967,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
+				DEVELOPMENT_TEAM = 95J49CMCMS;
 				ENABLE_BITCODE = NO;
 				FLAVOR_APP_NAME = "[STG] Clot";
 				FLUTTER_TARGET = lib/main_staging.dart;
@@ -1055,6 +1062,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
+				DEVELOPMENT_TEAM = 95J49CMCMS;
 				ENABLE_BITCODE = NO;
 				FLAVOR_APP_NAME = "[STG] Clot";
 				FLUTTER_TARGET = lib/main_staging.dart;
@@ -1144,6 +1152,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
+				DEVELOPMENT_TEAM = 95J49CMCMS;
 				ENABLE_BITCODE = NO;
 				FLAVOR_APP_NAME = "[STG] Clot";
 				FLUTTER_TARGET = lib/main_staging.dart;
@@ -1230,7 +1239,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		781AD8BC2B33823900A9FFBB /* XCLocalSwiftPackageReference "FlutterGeneratedPluginSwiftPackage" */ = {
+		781AD8BC2B33823900A9FFBB /* XCLocalSwiftPackageReference "Flutter/ephemeral/Packages/FlutterGeneratedPluginSwiftPackage" */ = {
 			isa = XCLocalSwiftPackageReference;
 			relativePath = Flutter/ephemeral/Packages/FlutterGeneratedPluginSwiftPackage;
 		};
